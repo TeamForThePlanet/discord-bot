@@ -11,9 +11,8 @@ You must have a Discord account in order to create the application and the bot.
 - `git clone https://github.com/TimeForThePlanet/discord-bot.git`
 - `pip install -r requirements.txt`
 - Create an `.env` file with the following information :
-
-    
-    TOKEN={Discord Bot Token ID goes here}
-    TARGET_GUILD_ID={Discord Server ID goes here}
-
+```
+TOKEN={Discord Bot Token ID goes here}
+TARGET_GUILD_ID={Discord Server ID goes here}
+```
 - Run `main.py` script
