@@ -1,5 +1,6 @@
 import discord
 import os
+import requests
 
 from discord import ChannelType
 from dotenv import load_dotenv
@@ -30,4 +31,18 @@ async def on_ready():
 
 
 if __name__ == '__main__':
-    client.run(os.getenv('TOKEN'))
+    # client.run(os.getenv('TOKEN'))
+
+    url = 'https://api.short.io/api/links'
+
+    querystring = {'domain_id': os.getenv('SHORT_IO_DOMAIN_ID')}
+
+    headers = {
+        'Accept': 'application/json',
+        'Authorization': os.getenv('SHORT_IO_SECRET_KEY')
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+    for link in response.json()['links']:
+        print(link)
