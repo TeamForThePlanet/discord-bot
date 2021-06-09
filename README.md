@@ -14,5 +14,8 @@ You must have a Discord account in order to create the application and the bot.
 ```
 TOKEN={Discord Bot Token ID goes here}
 TARGET_GUILD_ID={Discord Server ID goes here}
+
+SHORT_IO_SECRET_KEY={Secret key from Short.io goes here}
+SHORT_IO_DOMAIN_ID={Your domain ID from Short.io goes here}
 ```
 - Run `main.py` script
