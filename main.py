@@ -89,10 +89,10 @@ class MyClient(discord.Client):
                     embed.title = link['title']
                     embed.type = 'link'
                     embed.url = link['shortURL']
-                    embed.set_image(url=link['icon'])
+                    embed.set_thumbnail(url=link['icon'])
+                    embed.add_field(name='Lien', value=link["shortURL"], inline=False)
                     if link['tags']:
-                        embed.description = f'Lien : {link["shortURL"]}\n' \
-                                            f'Tags : ' + ' | '.join(tag for tag in link['tags'])
+                        embed.add_field(name='Tags', value=' | '.join(tag for tag in link['tags']))
                     await message.channel.send(embed=embed)
             else:
                 await message.reply(
