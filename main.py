@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+print_information = False
+
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -16,20 +18,21 @@ class MyClient(discord.Client):
         print(self.user.id)
         print('------')
 
-        # Display categories and channels of the target Discord server
-        target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
-        for guild in client.guilds:
-            if int(guild.id) == target_guild_id:
-                categories = [c for c in guild.channels if c.type == ChannelType.category]
-                text_channels = [c for c in guild.channels if c.type == ChannelType.text]
-                category_to_channel = {}
-                for category in categories:
-                    print(f'{category.name} :')
-                    category_to_channel[category.name] = []
-                    for c in text_channels:
-                        if c.category_id == category.id:
-                            print(' -', c, repr(c))
-                            category_to_channel[category.name].append(c)
+        if print_information:
+            # Display categories and channels of the target Discord server
+            target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
+            for guild in client.guilds:
+                if int(guild.id) == target_guild_id:
+                    categories = [c for c in guild.channels if c.type == ChannelType.category]
+                    text_channels = [c for c in guild.channels if c.type == ChannelType.text]
+                    category_to_channel = {}
+                    for category in categories:
+                        print(f'{category.name} :')
+                        category_to_channel[category.name] = []
+                        for c in text_channels:
+                            if c.category_id == category.id:
+                                print(' -', c, repr(c))
+                                category_to_channel[category.name].append(c)
 
     async def on_message(self, message):
         # Ignore itself
