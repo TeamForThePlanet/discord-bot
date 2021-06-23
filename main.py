@@ -39,6 +39,44 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
 
+        # Command !alerte-la-planete
+        if message.content.startswith('!alerte-la-planete') or message.content.startswith('!alerte-la-planète'):
+            args = message.content.split(' ')
+            args.pop(0)  # Remove command
+
+            # Create a list with all emojis to find in usernames
+            emojis = []
+            # Add emoji from mentioned channels
+            for channel in message.channel_mentions:
+                emojis.append(channel.name[0])
+            # Also add first character of other args (should be emoji)
+            for arg in args:
+                # Ignore mentioned channels
+                if arg[0] == '<':
+                    continue
+                emojis.append(arg[0])
+
+            # Search the emoji in the nickname of all guild members
+            members_to_ping = []
+            for member in message.guild.members:
+                if member.nick:
+                    for emoji in emojis:
+                        if emoji in member.nick:
+                            members_to_ping.append(member)
+                            break
+
+            # Ping all targeted members if at least one has been found
+            if members_to_ping:
+                await message.reply(
+                    ' '.join(user.mention for user in members_to_ping),
+                    mention_author=True
+                )
+            else:
+                await message.reply(
+                    'Aucun utilisateur à mentionner...',
+                    mention_author=True
+                )
+
         # Command !search-links
         if message.content.startswith('!search-links'):
             args = message.content.split(' ')
@@ -105,5 +143,7 @@ class MyClient(discord.Client):
 
 
 if __name__ == '__main__':
-    client = MyClient()
+    intents = discord.Intents.default()
+    intents.members = True
+    client = MyClient(intents=intents)
     client.run(os.getenv('TOKEN'))
