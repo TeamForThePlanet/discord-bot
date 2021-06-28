@@ -53,10 +53,11 @@ class MyClient(discord.Client):
                     emojis.append(channel.name[0])
             # Also add first character of other args (should be emoji)
             for arg in args:
+                char = arg.get(0)
                 # Ignore mentioned channels and common letters
-                if arg[0] == '<' or arg[0].lower() in 'abcdefghijklmnopqrstuvwxyz':
+                if not char or char == '<' or char.lower() in 'abcdefghijklmnopqrstuvwxyz':
                     continue
-                emojis.append(arg[0])
+                emojis.append(char)
 
             # Search the emoji in the nickname of all guild members
             members_to_ping = []
@@ -70,10 +71,12 @@ class MyClient(discord.Client):
 
             # Ping all targeted members if at least one has been found
             if members_to_ping:
-                await message.reply(
-                    ' '.join(user.mention for user in members_to_ping),
-                    mention_author=True
-                )
+                offset = 80
+                for start in range(len(members_to_ping) // offset):
+                    await message.reply(
+                        ' '.join(user.mention for user in members_to_ping[start:start+offset]),
+                        mention_author=True
+                    )
             else:
                 await message.reply(
                     'Aucun utilisateur à mentionner...',
