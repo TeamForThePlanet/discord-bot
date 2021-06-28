@@ -48,22 +48,25 @@ class MyClient(discord.Client):
             emojis = []
             # Add emoji from mentioned channels
             for channel in message.channel_mentions:
-                emojis.append(channel.name[0])
+                # Ignore channel if it doesn't have an emoji in th first char (so it might be a letter)
+                if channel.name[0] not in 'abcdefghijklmnopqrstuvwxyz':
+                    emojis.append(channel.name[0])
             # Also add first character of other args (should be emoji)
             for arg in args:
-                # Ignore mentioned channels
-                if arg[0] == '<':
+                # Ignore mentioned channels and common letters
+                if arg[0] == '<' or arg[0].lower() in 'abcdefghijklmnopqrstuvwxyz':
                     continue
                 emojis.append(arg[0])
 
             # Search the emoji in the nickname of all guild members
             members_to_ping = []
             for member in message.guild.members:
-                if member.nick:
-                    for emoji in emojis:
-                        if emoji in member.nick:
-                            members_to_ping.append(member)
-                            break
+                # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
+                nickname = member.nick if member.nick else member.name
+                for emoji in emojis:
+                    if emoji in nickname:
+                        members_to_ping.append(member)
+                        break
 
             # Ping all targeted members if at least one has been found
             if members_to_ping:
