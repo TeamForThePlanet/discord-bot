@@ -53,11 +53,12 @@ class MyClient(discord.Client):
                     emojis.append(channel.name[0])
             # Also add first character of other args (should be emoji)
             for arg in args:
-                char = arg.get(0)
-                # Ignore mentioned channels and common letters
-                if not char or char == '<' or char.lower() in 'abcdefghijklmnopqrstuvwxyz':
-                    continue
-                emojis.append(char)
+                if arg:
+                    char = arg[0]
+                    # Ignore mentioned channels and common letters (and backspace too)
+                    if char == '<' or char.lower() in 'abcdefghijklmnopqrstuvwxyz ':
+                        continue
+                    emojis.append(char)
 
             # Search the emoji in the nickname of all guild members
             members_to_ping = []
