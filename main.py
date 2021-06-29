@@ -41,6 +41,7 @@ class MyClient(discord.Client):
 
         # Command !alerte-la-planete
         if message.content.startswith('!alerte-la-planete') or message.content.startswith('!alerte-la-planète'):
+            print(message.content)
             args = message.content.split(' ')
             args.pop(0)  # Remove command
 
@@ -60,6 +61,8 @@ class MyClient(discord.Client):
                         continue
                     emojis.append(char)
 
+            print('emojis : ', str(emojis))
+
             # Search the emoji in the nickname of all guild members
             members_to_ping = []
             for member in message.guild.members:
@@ -72,8 +75,10 @@ class MyClient(discord.Client):
 
             # Ping all targeted members if at least one has been found
             if members_to_ping:
+                print('Nombre de personnes à pinguer : ', len(members_to_ping))
                 offset = 80
                 for start in range(len(members_to_ping) // offset):
+                    start = start * offset
                     await message.reply(
                         ' '.join(user.mention for user in members_to_ping[start:start+offset]),
                         mention_author=True
