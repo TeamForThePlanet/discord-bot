@@ -4,7 +4,7 @@ import requests
 
 from discord import ChannelType
 from dotenv import load_dotenv
-
+from emoji import UNICODE_EMOJI
 
 load_dotenv()
 
@@ -49,17 +49,13 @@ class MyClient(discord.Client):
             emojis = []
             # Add emoji from mentioned channels
             for channel in message.channel_mentions:
-                # Ignore channel if it doesn't have an emoji in th first char (so it might be a letter)
-                if channel.name[0] not in 'abcdefghijklmnopqrstuvwxyz':
+                # Ignore channel if it doesn't start with an emoji
+                if channel.name[0] in UNICODE_EMOJI['en']:
                     emojis.append(channel.name[0])
-            # Also add first character of other args (should be emoji)
+            # Also add first character of other args (should be an emoji to work)
             for arg in args:
-                if arg:
-                    char = arg[0]
-                    # Ignore mentioned channels and common letters (and backspace too)
-                    if char == '<' or char.lower() in 'abcdefghijklmnopqrstuvwxyz ':
-                        continue
-                    emojis.append(char)
+                if arg and arg[0] in UNICODE_EMOJI['en']:
+                    emojis.append(arg[0])
 
             print('emojis : ', str(emojis))
 
