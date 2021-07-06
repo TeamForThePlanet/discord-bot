@@ -72,7 +72,7 @@ class MyClient(discord.Client):
             if members_to_ping:
                 print('Nombre de personnes à pinguer : ', len(members_to_ping))
                 offset = 80
-                for start in range(len(members_to_ping) // offset + 1):
+                for start in range(1 + (len(members_to_ping) - 1) // offset):
                     start = start * offset
                     await message.reply(
                         ' '.join(user.mention for user in members_to_ping[start:start+offset]),
