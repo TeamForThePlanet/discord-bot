@@ -4,7 +4,7 @@ import requests
 
 from discord import ChannelType
 from dotenv import load_dotenv
-from emoji import UNICODE_EMOJI
+from emoji import emoji_lis
 
 load_dotenv()
 
@@ -45,17 +45,16 @@ class MyClient(discord.Client):
             args = message.content.split(' ')
             args.pop(0)  # Remove command
 
-            # Create a list with all emojis to find in usernames
+            # Create a list with all emojis to search in usernames
             emojis = []
-            # Add emoji from mentioned channels
+            # Add emoji from mentioned channels in the args list
             for channel in message.channel_mentions:
-                # Ignore channel if it doesn't start with an emoji
-                if channel.name[0] in UNICODE_EMOJI['en']:
-                    emojis.append(channel.name[0])
-            # Also add first character of other args (should be an emoji to work)
+                args.append(channel.name)
+            # Foreach args, check that is starts with an emoji and add it to the emoji list
             for arg in args:
-                if arg and arg[0] in UNICODE_EMOJI['en']:
-                    emojis.append(arg[0])
+                emoji_list = emoji_lis(arg)
+                if emoji_list and emoji_list[0]['location'] == 0:
+                    emojis.append(emoji_list[0]['emoji'])
 
             print('emojis : ', str(emojis))
 
