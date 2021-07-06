@@ -23,3 +23,22 @@ SHORT_IO_DOMAIN_ID={Your domain ID from Short.io goes here}
 ```
 
 - Run `main.py` script
+
+## Commands
+
+### `!alerte-la-planete`
+
+This command is useful to notify every members from a planet in the Time Discord. It searchs every users that have the planet emoji in their Discord nickname.
+
+For example :
+
+    !alerte-la-planete 🔍
+
+This will ping every members from the evaluators.  
+You can also use the hastag notation to search the planet channel :
+
+    !alerte-la-planete #🔍-évaluateurs-et-évaluatrices
+
+It is also possible to mention multiple planets at the same time :
+
+    !alerte-la-planete #🇪🇸-españa #🇮🇹-italia #🇩🇪-deutschland
