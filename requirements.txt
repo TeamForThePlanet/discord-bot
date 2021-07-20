@@ -4,6 +4,7 @@ attrs==21.2.0
 certifi==2021.5.30
 chardet==4.0.0
 discord==1.7.3
+discord-py-slash-command==2.3.2
 discord.py==1.7.3
 emoji==1.4.1
 idna==3.2

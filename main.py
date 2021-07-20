@@ -4,12 +4,14 @@ import requests
 
 from discord import ChannelType, Member
 from discord.ext.commands import Bot
+from discord_slash import SlashCommand
 from dotenv import load_dotenv
 from emoji import emoji_lis
 
 load_dotenv()
 
 print_information = False
+target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
 
 
 def get_nickname(member: Member):
@@ -26,7 +28,6 @@ class MyBot(Bot):
 
         if print_information:
             # Display categories and channels of the target Discord server
-            target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
             for guild in bot.guilds:
                 if int(guild.id) == target_guild_id:
                     categories = [c for c in guild.channels if c.type == ChannelType.category]
@@ -44,11 +45,14 @@ class MyBot(Bot):
 if __name__ == '__main__':
     intents = discord.Intents.default()
     intents.members = True
-    bot = MyBot(command_prefix='$', intents=intents)
+    bot = MyBot(command_prefix='!', intents=intents)
 
-    @bot.command()
-    async def ping(ctx):
-        await ctx.channel.send("pong")\
+    slash = SlashCommand(bot, sync_commands=True)
+
+
+    @slash.slash(name="ping", description='Teste de la connexion avec le Bot', guild_ids=[target_guild_id])
+    async def _ping(ctx):  # Defines a new "context" (ctx) command called "ping."
+        await ctx.send(f"Pong ! ({round(bot.latency * 1000, 5)} ms)")
 
 
     @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète'])
@@ -155,7 +159,11 @@ if __name__ == '__main__':
             )
 
 
-    @bot.command(name='quarks-a-accueillir', aliases=['quarks-à-accueillir'])
+    @slash.slash(
+        name="quarks-a-accueillir",
+        description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
+        guild_ids=[target_guild_id]
+    )
     async def quarks_to_welcome(ctx):
         filename = 'quarks à accueillir.txt'
         written = False
@@ -168,14 +176,11 @@ if __name__ == '__main__':
         if written:
             # Send file to Discord in message
             with open(filename, "rb") as file:
-                await ctx.message.reply(
+                await ctx.send(
                     "Fichier texte contenant la liste des quarks n'ayant pas d'astérique dans leur nom :",
                     file=discord.File(file, filename)
                 )
         else:
-            await ctx.message.reply(
-                'Aucun quarks à accueillir 😮',
-                mention_author=True
-            )
+            await ctx.send('Aucun quarks à accueillir 😮')
 
     bot.run(os.getenv('TOKEN'))
