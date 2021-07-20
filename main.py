@@ -44,7 +44,7 @@ class MyBot(Bot):
 if __name__ == '__main__':
     intents = discord.Intents.default()
     intents.members = True
-    bot = MyBot(command_prefix='$', intents=intents)
+    bot = MyBot(command_prefix='!', intents=intents)
 
     @bot.command()
     async def ping(ctx):
