@@ -130,3 +130,6 @@ dmypy.json
 
 # JetBrains
 .idea
+
+# Text file to list all quarks that hasn't been welcomed
+quarks à accueillir.txt
