@@ -1,8 +1,9 @@
-import discord
+import csv
+
 import os
 import requests
 
-from discord import ChannelType, Member
+from discord import ChannelType, File, Intents, Embed
 from discord.ext.commands import Bot
 from dotenv import load_dotenv
 from emoji import emoji_lis
@@ -10,10 +11,6 @@ from emoji import emoji_lis
 load_dotenv()
 
 print_information = False
-
-
-def get_nickname(member: Member):
-    return member.nick if member.nick else member.name
 
 
 class MyBot(Bot):
@@ -42,7 +39,7 @@ class MyBot(Bot):
 
 
 if __name__ == '__main__':
-    intents = discord.Intents.default()
+    intents = Intents.default()
     intents.members = True
     bot = MyBot(command_prefix='!', intents=intents)
 
@@ -73,7 +70,7 @@ if __name__ == '__main__':
         for member in ctx.guild.members:
             # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
             for emoji in emojis:
-                if emoji in get_nickname(member):
+                if emoji in member.display_name:
                     members_to_ping.append(member)
                     break
 
@@ -130,7 +127,7 @@ if __name__ == '__main__':
                                 break
 
         if found_links:
-            embed = discord.Embed()
+            embed = Embed()
             embed.title = ' '.join(args)
             embed.description = '\n'.join(f'- [{link["title"]}]({link["shortURL"]})' for link in found_links)
             initial_search = ' '.join(args)
@@ -139,7 +136,7 @@ if __name__ == '__main__':
                 mention_author=True
             )
             for link in found_links:
-                embed = discord.Embed()
+                embed = Embed()
                 embed.title = link['title']
                 embed.type = 'link'
                 embed.url = link['shortURL']
@@ -157,25 +154,33 @@ if __name__ == '__main__':
 
     @bot.command(name='quarks-a-accueillir', aliases=['quarks-à-accueillir'])
     async def quarks_to_welcome(ctx):
-        filename = 'quarks à accueillir.txt'
+        filename = 'quarks à accueillir.csv'
         written = False
-        with open(filename, "w", encoding="utf-8") as file:
+        with open(filename, 'w', encoding='utf-8', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur'])
             for member in ctx.guild.members:
-                if not member.bot and '*' not in get_nickname(member):
-                    file.write(f'{member.nick} [@{member}] - {member.joined_at.strftime("%d/%m/%Y %H:%M")}\n')
+                if not member.bot and '*' not in member.display_name:
+                    writer.writerow([
+                        str(member),
+                        member.nick or '',
+                        member.joined_at.strftime('%d/%m/%Y %H:%M')]
+                    )
                     written = True
 
         if written:
             # Send file to Discord in message
-            with open(filename, "rb") as file:
+            with open(filename, 'rb') as file:
                 await ctx.message.reply(
-                    "Fichier texte contenant la liste des quarks n'ayant pas d'astérique dans leur nom :",
-                    file=discord.File(file, filename)
+                    "Fichier CSV contenant la liste des quarks n'ayant pas d'astérique dans leur nom :",
+                    file=File(file, filename)
                 )
         else:
             await ctx.message.reply(
                 'Aucun quarks à accueillir 😮',
                 mention_author=True
             )
+        # Delete file at the end of processing
+        os.remove(filename)
 
     bot.run(os.getenv('TOKEN'))
