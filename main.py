@@ -40,15 +40,25 @@ class MyBot(Bot):
                                 category_to_channel[category.name].append(c)
 
     async def on_message(self, message):
-        if not message.author.bot and ('apéro' in message.content.lower() or 'apero' in message.content.lower()):
-            answer_choices = [
-                "On parle toujours d'apéro ici ! 😮",
-                "J'ai cru entendre parler d'apéro ? 😄",
-                '"Il faut apéroiser le changement climatique !" 😁',
-                'Encore un apéro ? 😛',
-                "Où ça un apéro !? 😅"
-            ]
-            await message.reply(choice(answer_choices))
+        if not message.author.bot:
+            if 'apéro' in message.content.lower() or 'apero' in message.content.lower():
+                answer_choices = [
+                    "On parle toujours d'apéro ici ! 😮",
+                    "J'ai cru entendre parler d'apéro ? 😄",
+                    '"Il faut apéroiser le changement climatique !" 😁',
+                    'Encore un apéro ? 😛',
+                    "Où ça un apéro !? 😅"
+                ]
+                await message.reply(choice(answer_choices))
+
+            if '🍺' in message.content or '🍻' in message.content:
+                answer_choices = [
+                    "A la tienne ! 😀",
+                    "Oh je vois des bières par ici 😁",
+                    'Tchin ! 🍻',
+                    'Apéro ? 😄'
+                ]
+                await message.reply(choice(answer_choices))
 
         await self.process_commands(message)
 
