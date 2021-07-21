@@ -1,6 +1,8 @@
 import csv
 
 import os
+from random import choice
+
 import requests
 
 from discord import ChannelType, File, Intents, Embed
@@ -36,6 +38,19 @@ class MyBot(Bot):
                             if c.category_id == category.id:
                                 print(' -', c, repr(c))
                                 category_to_channel[category.name].append(c)
+
+    async def on_message(self, message):
+        if not message.author.bot and ('apéro' in message.content.lower() or 'apero' in message.content.lower()):
+            answer_choices = [
+                "On parle toujours d'apéro ici ! 😮",
+                "J'ai cru entendre parler d'apéro ? 😄",
+                '"Il faut apéroiser le changement climatique !" 😁',
+                'Encore un apéro ? 😛',
+                "Où ça un apéro !? 😅"
+            ]
+            await message.reply(choice(answer_choices))
+
+        await self.process_commands(message)
 
 
 if __name__ == '__main__':
@@ -81,14 +96,10 @@ if __name__ == '__main__':
             for start in range(1 + (len(members_to_ping) - 1) // offset):
                 start = start * offset
                 await ctx.message.reply(
-                    ' '.join(user.mention for user in members_to_ping[start:start + offset]),
-                    mention_author=True
+                    ' '.join(user.mention for user in members_to_ping[start:start + offset])
                 )
         else:
-            await ctx.message.reply(
-                'Aucun utilisateur à mentionner...',
-                mention_author=True
-            )
+            await ctx.message.reply('Aucun utilisateur à mentionner...')
 
     @bot.command(name='search-links')
     async def search_links(ctx, *args):
@@ -131,10 +142,7 @@ if __name__ == '__main__':
             embed.title = ' '.join(args)
             embed.description = '\n'.join(f'- [{link["title"]}]({link["shortURL"]})' for link in found_links)
             initial_search = ' '.join(args)
-            await ctx.message.reply(
-                f'Voici les résultats de votre recherche "{initial_search}":',
-                mention_author=True
-            )
+            await ctx.message.reply(f'Voici les résultats de votre recherche "{initial_search}":')
             for link in found_links:
                 embed = Embed()
                 embed.title = link['title']
@@ -146,10 +154,7 @@ if __name__ == '__main__':
                     embed.add_field(name='Tags', value=' | '.join(tag for tag in link['tags']))
                 await ctx.send(embed=embed)
         else:
-            await ctx.message.reply(
-                'Aucun résultat pour votre recherche...',
-                mention_author=True
-            )
+            await ctx.message.reply('Aucun résultat pour votre recherche...')
 
 
     @bot.command(name='quarks-a-accueillir', aliases=['quarks-à-accueillir'])
@@ -176,10 +181,7 @@ if __name__ == '__main__':
                     file=File(file, filename)
                 )
         else:
-            await ctx.message.reply(
-                'Aucun quarks à accueillir 😮',
-                mention_author=True
-            )
+            await ctx.message.reply('Aucun quarks à accueillir 😮')
         # Delete file at the end of processing
         os.remove(filename)
 
