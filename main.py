@@ -1,6 +1,7 @@
 import csv
 
 import os
+from datetime import datetime
 from random import choice
 
 import requests
@@ -16,6 +17,11 @@ print_information = False
 
 
 class MyBot(Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set an arbitrary count for the word apero based on the current date when initializing the bot
+        self.apero_count = datetime.today().day * 44
+
     async def on_ready(self):
         print('------')
         print('Logged in as')
@@ -42,14 +48,30 @@ class MyBot(Bot):
     async def on_message(self, message):
         if not message.author.bot:
             if 'apéro' in message.content.lower() or 'apero' in message.content.lower():
-                answer_choices = [
-                    "On parle toujours d'apéro ici ! 😮",
-                    "J'ai cru entendre parler d'apéro ? 😄",
-                    '"Il faut apéroiser le changement climatique !" 😁',
-                    'Encore un apéro ? 😛',
-                    "Où ça un apéro !? 😅"
-                ]
-                await message.reply(choice(answer_choices))
+                # Reset counter on first day of month
+                if datetime.today().day == 0 and self.apero_count > 50:
+                    self.apero_count = 0
+                self.apero_count += 1
+                if self.apero_count % 100 == 0:
+                    answer = f'Bravo ! Tu viens de proposer la {self.apero_count}ème mention ' \
+                             f'du mot apéro ce mois-ci 🥳🍹'
+                else:
+                    answer_choices = [
+                        "On parle toujours d'apéro ici ! 😮",
+                        "J'ai cru entendre parler d'apéro ? 😄",
+                        '"Il faut apéroiser le changement climatique !" 😁',
+                        'Encore un apéro ? 😛',
+                        "Où ça un apéro !? 😅",
+                        "Vivement l'apéro du 20 à 20h20 ! 😁",
+                        "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉",
+                        'Et... Il y aura du Ricard à cet apéro ? 😍',
+                        'Tu prévois le cidre aussi ? (pour les bretons !)',
+                        'Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓',
+                    ]
+                    if datetime.now().hour < 10:
+                        answer_choices.append("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂")
+                    answer = choice(answer_choices)
+                await message.reply(answer)
 
             if '🍺' in message.content or '🍻' in message.content:
                 answer_choices = [
