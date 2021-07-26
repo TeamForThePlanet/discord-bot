@@ -1,6 +1,7 @@
 import csv
 
 import os
+import re
 from datetime import datetime
 from random import choice
 
@@ -47,7 +48,7 @@ class MyBot(Bot):
 
     async def on_message(self, message):
         if not message.author.bot:
-            if 'apéro' in message.content.lower() or 'apero' in message.content.lower():
+            if re.search(r"ap[eé]?ro", message.content, re.IGNORECASE):
                 # Reset counter on first day of month
                 if datetime.today().day == 0 and self.apero_count > 50:
                     self.apero_count = 0
@@ -73,7 +74,23 @@ class MyBot(Bot):
                     answer = choice(answer_choices)
                 await message.reply(answer)
 
-            if '🍺' in message.content or '🍻' in message.content:
+            elif re.search(r"ap[eé]r'? ?agro", message.content, re.IGNORECASE):
+                answer_choices = [
+                    "Rejoignez les Agros, y'a Apér'Agro",
+                    "Un verre acheté, une baleine sauvée",
+                    'Un verre acheté, un éléphant sauvé',
+                    'Un verre acheté, une loutre sauvée',
+                    "Un verre acheté, un lama sauvé",
+                    "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !",
+                    "Les Agros ne vous connaissent pas mais vous aiment déjà",
+                    "Viens planter des baleines autour d'un verre",
+                    "Viens planter des éléphants autour d'un verre",
+                    "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir !",
+                    'Les Agros, ça suffit, vous êtes trop chauds !',
+                ]
+                await message.reply(choice(answer_choices))
+
+            elif '🍺' in message.content or '🍻' in message.content:
                 answer_choices = [
                     "A la tienne ! 😀",
                     "Oh je vois des bières par ici 😁",
