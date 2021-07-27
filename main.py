@@ -3,7 +3,7 @@ import csv
 import os
 import re
 from datetime import datetime
-from random import choice
+from random import choice, randint
 
 import requests
 
@@ -48,15 +48,20 @@ class MyBot(Bot):
 
     async def on_message(self, message):
         if not message.author.bot:
+
+            # Prepare and random number to add randomness in answers
+            random_number = randint(0, 100)
+
+            # Search if message contains "apero"
             if re.search(r"ap[eé]?ro", message.content, re.IGNORECASE):
                 # Reset counter on first day of month
                 if datetime.today().day == 0 and self.apero_count > 50:
                     self.apero_count = 0
                 self.apero_count += 1
                 if self.apero_count % 100 == 0:
-                    answer = f'Bravo ! Tu viens de proposer la {self.apero_count}ème mention ' \
-                             f'du mot apéro ce mois-ci 🥳🍹'
-                else:
+                    await message.reply(f'Bravo ! Tu viens de proposer la {self.apero_count}ème mention '
+                                        f'du mot apéro ce mois-ci 🥳🍹')
+                elif random_number < 20:
                     answer_choices = [
                         "On parle toujours d'apéro ici ! 😮",
                         "J'ai cru entendre parler d'apéro ? 😄",
@@ -68,12 +73,17 @@ class MyBot(Bot):
                         'Et... Il y aura du Ricard à cet apéro ? 😍',
                         'Tu prévois le cidre aussi ? (pour les bretons !)',
                         'Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓',
+                        'Euh... Vous avez prévenu <@!696086695283523604> de cet apéro ? 😱',
+                        '<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄',
+                        "C'est chez <@!696086695283523604> l'apéro ? 😂",
+                        "Qui s'occupe de préparer des mojitos ? 🍹🍸",
+                        "Eh bah alors ! On n'attend pas Patrick ? 😤"
                     ]
                     if datetime.now().hour < 10:
                         answer_choices.append("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂")
-                    answer = choice(answer_choices)
-                await message.reply(answer)
+                    await message.reply(choice(answer_choices))
 
+            # Search if message contains "aper'agro"
             elif re.search(r"ap[eé]r'? ?agro", message.content, re.IGNORECASE):
                 answer_choices = [
                     "Rejoignez les Agros, y'a Apér'Agro",
@@ -90,7 +100,8 @@ class MyBot(Bot):
                 ]
                 await message.reply(choice(answer_choices))
 
-            elif '🍺' in message.content or '🍻' in message.content:
+            # Search if message contains beers emoji
+            elif '🍺' in message.content or '🍻' in message.content and random_number < 40:
                 answer_choices = [
                     "A la tienne ! 😀",
                     "Oh je vois des bières par ici 😁",
