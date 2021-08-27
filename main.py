@@ -1,3 +1,5 @@
+import csv
+
 import discord
 import os
 import requests
@@ -25,6 +27,42 @@ class MyBot(Bot):
         print(self.user.name)
         print(self.user.id)
         print('------')
+
+        stats = {}
+        with open('data_rhone_alpes.csv', 'w', encoding='utf-8', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(
+                ['Date', 'Heure', 'Auteur', 'Longueur du message', 'Lien vers le message'])
+            messages = await self.get_channel(780828899775873074).history(limit=None).flatten()
+            for message in messages:
+                if not message.author.bot:
+                    if message.author.id not in stats:
+                        stats[message.author.id] = {
+                            'user': str(message.author),
+                            'total_messages': 0,
+                            'total_characters': 0
+                        }
+                    stats[message.author.id]['total_messages'] += 1
+                    stats[message.author.id]['total_characters'] += len(message.content)
+                    writer.writerow([
+                        message.created_at.strftime('%d/%m/%Y'),
+                        message.created_at.strftime('%H:%M:%S'),
+                        str(message.author),
+                        str(len(message.content)),
+                        message.jump_url
+                    ])
+            if stats:
+                total_messages = sum(s['total_messages'] for s in stats.values())
+                print(f'{total_messages=}')
+                total_characters = sum(s['total_characters'] for s in stats.values())
+                print(f'{total_characters=}')
+                position = 0
+                for stat in sorted(stats.values(), key=lambda s: s['total_messages'], reverse=True):
+                    position += 1
+                    print(position)
+                    stat['percentage_messages'] = str(round(stat['total_messages'] * 100 / total_messages, 2))
+                    stat['percentage_characters'] = str(round(stat['total_characters'] * 100 / total_characters, 2))
+                    print(stat)
 
         if print_information:
             # Display categories and channels of the target Discord server
