@@ -55,7 +55,7 @@ class MyBot(Bot):
             # Search if message contains "apero"
             if re.search(r"ap[eé]?ro", message.content, re.IGNORECASE):
                 # Reset counter on first day of month
-                if datetime.today().day == 0 and self.apero_count > 50:
+                if datetime.today().day == 1 and self.apero_count > 50:
                     self.apero_count = 0
                 self.apero_count += 1
                 if self.apero_count % 100 == 0:
