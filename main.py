@@ -1,4 +1,5 @@
 import csv
+import re
 
 import discord
 import os
@@ -29,35 +30,69 @@ class MyBot(Bot):
         print('------')
 
         stats = {}
-        with open('data_rhone_alpes.csv', 'w', encoding='utf-8', newline='') as file:
+        with open('data_all_channels.csv', 'w', encoding='utf-8', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(
-                ['Date', 'Heure', 'Auteur', 'Longueur du message', 'Lien vers le message'])
-            messages = await self.get_channel(780828899775873074).history(limit=None).flatten()
-            for message in messages:
-                if not message.author.bot:
-                    if message.author.id not in stats:
-                        stats[message.author.id] = {
-                            'user': str(message.author),
-                            'total_messages': 0,
-                            'total_characters': 0
-                        }
-                    stats[message.author.id]['total_messages'] += 1
-                    stats[message.author.id]['total_characters'] += len(message.content)
-                    writer.writerow([
-                        message.created_at.strftime('%d/%m/%Y'),
-                        message.created_at.strftime('%H:%M:%S'),
-                        str(message.author),
-                        str(len(message.content)),
-                        message.jump_url
-                    ])
+                [
+                    'Salon',
+                    'Date',
+                    'Heure',
+                    'Auteur',
+                    'Pseudo Time',
+                    'Longueur du message',
+                    'Nb de réactions',
+                    'Nb de PJ',
+                    'Nb de GIF',
+                    'Liens externes',
+                    'Lien vers le message'
+                ])
+            for channel in self.get_guild(720982721727561768).text_channels:
+                try:
+                    messages = await channel.history(limit=None).flatten()
+                except Exception:
+                    continue
+
+                previous_author = None
+                previous_data = {'characters': 0}
+                for message in messages:
+                    if not message.author.bot:
+                        if message.author.id not in stats:
+                            stats[message.author.id] = {
+                                'user': message.author.name,
+                                'total_messages': 0,
+                                'total_characters': 0
+                            }
+                        stats[message.author.id]['total_messages'] += 1
+                        stats[message.author.id]['total_characters'] += len(message.content)
+
+                        if message.author == previous_author:
+                            previous_data['characters'] += len(message.content)
+                        else:
+
+                            writer.writerow([
+                                channel.name,
+                                message.created_at.strftime('%d/%m/%Y'),
+                                message.created_at.strftime('%H:%M:%S'),
+                                message.author.name,
+                                message.author.nick if message.author.nick else '',
+                                previous_data['characters'] + len(message.content),
+                                len(message.reactions),
+                                len(message.attachments),
+                                'Oui' if any(a.content_type == 'image/gif' for a in message.attachments) else 'Non',
+                                ' - '.join(re.findall('https?://[^\s]+', message.content)),
+                                message.jump_url
+                            ])
+                            previous_author = message.author
+                    else:
+                        previous_author = None
+                        previous_data = {'characters': 0}
             if stats:
                 total_messages = sum(s['total_messages'] for s in stats.values())
                 print(f'{total_messages=}')
                 total_characters = sum(s['total_characters'] for s in stats.values())
                 print(f'{total_characters=}')
                 position = 0
-                for stat in sorted(stats.values(), key=lambda s: s['total_messages'], reverse=True):
+                for stat in sorted(stats.values(), key=lambda s: s['total_messages'], reverse=True)[:100]:
                     position += 1
                     print(position)
                     stat['percentage_messages'] = str(round(stat['total_messages'] * 100 / total_messages, 2))
@@ -134,6 +169,7 @@ if __name__ == '__main__':
                 'Aucun utilisateur à mentionner...',
                 mention_author=True
             )
+
 
     @bot.command(name='search-links')
     async def search_links(ctx, *args):
@@ -220,5 +256,6 @@ if __name__ == '__main__':
                 )
         else:
             await ctx.send('Aucun quarks à accueillir 😮')
+
 
     bot.run(os.getenv('TOKEN'))
