@@ -22,6 +22,8 @@ class MyBot(Bot):
         super().__init__(*args, **kwargs)
         # Set an arbitrary count for the word apero based on the current date when initializing the bot
         self.apero_count = datetime.today().day * 44
+        self.planet_mention_count = 0
+        self.search_links_count = 0
 
     async def on_ready(self):
         print('------')
@@ -49,7 +51,7 @@ class MyBot(Bot):
     async def on_message(self, message):
         if not message.author.bot:
 
-            # Prepare and random number to add randomness in answers
+            # Prepare and random number to add randomness if the bot replies or not
             random_number = randint(0, 100)
 
             # Search if message contains "apero"
@@ -125,6 +127,7 @@ if __name__ == '__main__':
 
     @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète'])
     async def mention_planet_members(ctx, *args):
+        bot.planet_mention_count += 1
         print(ctx.message.content)
 
         # Create a list with all emojis to search in usernames
@@ -163,6 +166,7 @@ if __name__ == '__main__':
 
     @bot.command(name='search-links')
     async def search_links(ctx, *args):
+        bot.search_links_count += 1
         found_links = []
         if args:
             url = 'https://api.short.io/api/links'
@@ -244,5 +248,14 @@ if __name__ == '__main__':
             await ctx.message.reply('Aucun quarks à accueillir 😮')
         # Delete file at the end of processing
         os.remove(filename)
+
+
+    @bot.command(name='bot-info')
+    async def get_bot_information(ctx):
+        await ctx.message.reply(
+            f'Compteur du mot "apéro" : {bot.apero_count}.\n'
+            f'Nombre d\'utilisation de la commande "alerte-la-planete" : {bot.planet_mention_count}.\n'
+            f'Nombre d\'utilisation de la commande "search-links" : {bot.search_links_count}.\n'
+        )
 
     bot.run(os.getenv('TOKEN'))
