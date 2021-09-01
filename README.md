@@ -20,6 +20,8 @@ TARGET_GUILD_ID={Discord Server ID goes here}
 
 SHORT_IO_SECRET_KEY={Secret key from Short.io goes here}
 SHORT_IO_DOMAIN_ID={Your domain ID from Short.io goes here}
+
+CREATOR_ID={Your Discord User ID}
 ```
 
 - Run `main.py` script
@@ -46,3 +48,7 @@ It is also possible to mention multiple planets at the same time :
 ### `!quarks-a-accueillir`
 
 This command will generate a CSV file containing all server's members that don't have a `*` in their Discord nickname.
+
+## Behaviour
+
+The bot has a chance to react with a random answer when the word "apero" or a beer emoji seems to appear in someone's message.

@@ -258,4 +258,23 @@ if __name__ == '__main__':
             f'Nombre d\'utilisation de la commande "search-links" : {bot.search_links_count}.\n'
         )
 
+
+    @bot.command(name='set-bot-apero-count')
+    async def set_bot_apero_count(ctx, *args):
+        if ctx.message.author.id != int(os.getenv('CREATOR_ID')):
+            await ctx.message.reply(f"Désolé, cette commande est réservé au créateur du bot 😜")
+        else:
+            try:
+                value = int(args[0])
+            except IndexError:
+                await ctx.message.reply('Il faut spécifier une valeur')
+            except ValueError:
+                await ctx.message.reply(f"{args[0]} n'a pas l'air d'être un nombre")
+            else:
+                if value < 1:
+                    await ctx.message.reply(f"Il me faut une valeur supérieure à 0 😛")
+                else:
+                    bot.apero_count = value
+                    await ctx.message.reply(f"Le compteur du mot apéro a bien été défini à {value} 😉")
+
     bot.run(os.getenv('TOKEN'))
