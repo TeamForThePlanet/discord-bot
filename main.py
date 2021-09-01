@@ -132,10 +132,10 @@ if __name__ == '__main__':
 
         # Create a list with all emojis to search in usernames
         emojis = []
-        # Add emoji from mentioned channels in the args list
+        # Add mentioned channels name in the args list
         for channel in ctx.message.channel_mentions:
-            args = (channel.name,)
-        # Foreach args, check that is starts with an emoji and add it to the emoji list
+            args += channel.name
+        # Foreach args, check if it starts with an emoji then add it to the emojis list
         for arg in args:
             emoji_list = emoji_lis(arg)
             if emoji_list and emoji_list[0]['location'] == 0:
