@@ -134,7 +134,7 @@ if __name__ == '__main__':
         emojis = []
         # Add mentioned channels name in the args list
         for channel in ctx.message.channel_mentions:
-            args += channel.name
+            args += (channel.name,)
         # Foreach args, check if it starts with an emoji then add it to the emojis list
         for arg in args:
             emoji_list = emoji_lis(arg)
