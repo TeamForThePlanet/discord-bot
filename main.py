@@ -42,50 +42,45 @@ class MyBot(Bot):
                     'Longueur du message',
                     'Nb de réactions',
                     'Nb de PJ',
-                    'Nb de GIF',
+                    'GIF',
                     'Liens externes',
                     'Lien vers le message'
                 ])
             for channel in self.get_guild(720982721727561768).text_channels:
+                print(channel.name)
                 try:
                     messages = await channel.history(limit=None).flatten()
                 except Exception:
                     continue
 
-                previous_author = None
-                previous_data = {'characters': 0}
                 for message in messages:
                     if not message.author.bot:
                         if message.author.id not in stats:
                             stats[message.author.id] = {
                                 'user': message.author.name,
                                 'total_messages': 0,
-                                'total_characters': 0
+                                'total_characters': 0,
+                                'total_gif': 0,
                             }
                         stats[message.author.id]['total_messages'] += 1
                         stats[message.author.id]['total_characters'] += len(message.content)
+                        contain_gif = any(a.content_type == 'image/gif' for a in message.attachments) or 'https://tenor.com' in message.content
+                        if contain_gif:
+                            stats[message.author.id]['total_gif'] += 1
 
-                        if message.author == previous_author:
-                            previous_data['characters'] += len(message.content)
-                        else:
-
-                            writer.writerow([
-                                channel.name,
-                                message.created_at.strftime('%d/%m/%Y'),
-                                message.created_at.strftime('%H:%M:%S'),
-                                message.author.name,
-                                message.author.nick if message.author.nick else '',
-                                previous_data['characters'] + len(message.content),
-                                len(message.reactions),
-                                len(message.attachments),
-                                'Oui' if any(a.content_type == 'image/gif' for a in message.attachments) else 'Non',
-                                ' - '.join(re.findall('https?://[^\s]+', message.content)),
-                                message.jump_url
-                            ])
-                            previous_author = message.author
-                    else:
-                        previous_author = None
-                        previous_data = {'characters': 0}
+                        writer.writerow([
+                            channel.name,
+                            message.created_at.strftime('%d/%m/%Y'),
+                            message.created_at.strftime('%H:%M:%S'),
+                            message.author.name,
+                            getattr(message.author, 'nick', ''),
+                            len(message.content),
+                            len(message.reactions),
+                            len(message.attachments),
+                            'Oui' if contain_gif else 'Non',
+                            ' | '.join(re.findall('https?://[^\s]+', message.content)),
+                            message.jump_url
+                        ])
             if stats:
                 total_messages = sum(s['total_messages'] for s in stats.values())
                 print(f'{total_messages=}')
@@ -118,7 +113,7 @@ class MyBot(Bot):
 if __name__ == '__main__':
     intents = discord.Intents.default()
     intents.members = True
-    bot = MyBot(command_prefix='!', intents=intents)
+    bot = MyBot(command_prefix='$', intents=intents)
 
     slash = SlashCommand(bot, sync_commands=True)
 
