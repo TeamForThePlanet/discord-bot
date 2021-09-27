@@ -68,12 +68,17 @@ class MyBot(Bot):
                         if contain_gif:
                             stats[message.author.id]['total_gif'] += 1
 
+                        try:
+                            nickname = message.author.nick.replace('~', '#')
+                        except:
+                            nickname = ''
+
                         writer.writerow([
                             channel.name,
                             message.created_at.strftime('%d/%m/%Y'),
                             message.created_at.strftime('%H:%M:%S'),
-                            message.author.name,
-                            getattr(message.author, 'nick', ''),
+                            message.author.name.replace('~', '#'),
+                            nickname,
                             len(message.content),
                             len(message.reactions),
                             len(message.attachments),
