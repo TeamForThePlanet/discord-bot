@@ -164,7 +164,7 @@ if __name__ == '__main__':
         await ctx.channel.send("pong")\
 
 
-    @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète'])
+    @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète', 'notify-the-planet'])
     async def mention_planet_members(ctx, *args):
         bot.planet_mention_count += 1
         print(ctx.message.content)
@@ -260,7 +260,7 @@ if __name__ == '__main__':
             await ctx.message.reply('Aucun résultat pour votre recherche...')
 
 
-    @bot.command(name='quarks-a-accueillir', aliases=['quarks-à-accueillir'])
+    @bot.command(name='quarks-a-accueillir', aliases=['quarks-à-accueillir', 'quarks-to-welcome'])
     async def quarks_to_welcome(ctx):
         filename = 'quarks à accueillir.csv'
         written = False
