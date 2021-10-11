@@ -7,7 +7,7 @@ from random import choice, randint
 
 import requests
 
-from discord import ChannelType, File, Intents, Embed
+from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member
 from discord.ext.commands import Bot
 from dotenv import load_dotenv
 from emoji import emoji_lis, distinct_emoji_lis
@@ -50,73 +50,77 @@ class MyBot(Bot):
                                 print(' -', c, repr(c))
                                 category_to_channel[category.name].append(c)
 
-    async def on_message(self, message):
+    async def on_message(self, message: Message):
         if not message.author.bot:
+            # Check if it's a message from DM
+            if isinstance(message.channel, DMChannel):
+                await message.reply("Désolé, je n'ai pas encore été programmé pour répondre au message en privé 😅")
+            else:
+                # Prepare and random number to add randomness if the bot replies or not
+                random_number = randint(0, 100)
 
-            # Prepare and random number to add randomness if the bot replies or not
-            random_number = randint(0, 100)
+                # Search if message contains "apero"
+                if re.search(r"ap[eé]?ro", message.content, re.IGNORECASE):
+                    # Reset counter on first day of month
+                    if datetime.today().day == 1 and self.apero_count > 50:
+                        self.apero_count = 0
+                    self.apero_count += 1
+                    if self.apero_count % 100 == 0:
+                        await message.reply(f'Bravo ! Tu viens de proposer la {self.apero_count}ème mention '
+                                            f'du mot apéro ce mois-ci 🥳🍹')
+                    elif random_number < 20:
+                        answer_choices = [
+                            "On parle toujours d'apéro ici ! 😮",
+                            "J'ai cru entendre parler d'apéro ? 😄",
+                            '"Il faut apéroiser le changement climatique !" 😁',
+                            'Encore un apéro ? 😛',
+                            "Où ça un apéro !? 😅",
+                            "Vivement l'apéro du 20 à 20h20 ! 😁",
+                            "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉",
+                            'Et... Il y aura du Ricard à cet apéro ? 😍',
+                            'Tu prévois le cidre aussi ? (pour les bretons !)',
+                            'Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓',
+                            'Euh... Vous avez prévenu <@!696086695283523604> de cet apéro ? 😱',
+                            '<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄',
+                            "C'est chez <@!696086695283523604> l'apéro ? 😂",
+                            "Qui s'occupe de préparer des mojitos ? 🍹🍸",
+                            "Eh bah alors ! On n'attend pas Patrick ? 😤"
+                        ]
+                        if datetime.now().hour < 10:
+                            answer_choices.append("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂")
+                        await message.reply(choice(answer_choices))
 
-            # Search if message contains "apero"
-            if re.search(r"ap[eé]?ro", message.content, re.IGNORECASE):
-                # Reset counter on first day of month
-                if datetime.today().day == 1 and self.apero_count > 50:
-                    self.apero_count = 0
-                self.apero_count += 1
-                if self.apero_count % 100 == 0:
-                    await message.reply(f'Bravo ! Tu viens de proposer la {self.apero_count}ème mention '
-                                        f'du mot apéro ce mois-ci 🥳🍹')
-                elif random_number < 20:
+                # Search if message contains "aper'agro"
+                elif re.search(r"ap[eé]r'? ?agro", message.content, re.IGNORECASE):
                     answer_choices = [
-                        "On parle toujours d'apéro ici ! 😮",
-                        "J'ai cru entendre parler d'apéro ? 😄",
-                        '"Il faut apéroiser le changement climatique !" 😁',
-                        'Encore un apéro ? 😛',
-                        "Où ça un apéro !? 😅",
-                        "Vivement l'apéro du 20 à 20h20 ! 😁",
-                        "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉",
-                        'Et... Il y aura du Ricard à cet apéro ? 😍',
-                        'Tu prévois le cidre aussi ? (pour les bretons !)',
-                        'Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓',
-                        'Euh... Vous avez prévenu <@!696086695283523604> de cet apéro ? 😱',
-                        '<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄',
-                        "C'est chez <@!696086695283523604> l'apéro ? 😂",
-                        "Qui s'occupe de préparer des mojitos ? 🍹🍸",
-                        "Eh bah alors ! On n'attend pas Patrick ? 😤"
+                        "Rejoignez les Agros, y'a Apér'Agro",
+                        "Un verre acheté, une baleine sauvée",
+                        'Un verre acheté, un éléphant sauvé',
+                        'Un verre acheté, une loutre sauvée',
+                        "Un verre acheté, un lama sauvé",
+                        "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !",
+                        "Les Agros ne vous connaissent pas mais vous aiment déjà",
+                        "Viens planter des baleines autour d'un verre",
+                        "Viens planter des éléphants autour d'un verre",
+                        "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir !",
+                        'Les Agros, ça suffit, vous êtes trop chauds !',
                     ]
-                    if datetime.now().hour < 10:
-                        answer_choices.append("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂")
                     await message.reply(choice(answer_choices))
 
-            # Search if message contains "aper'agro"
-            elif re.search(r"ap[eé]r'? ?agro", message.content, re.IGNORECASE):
-                answer_choices = [
-                    "Rejoignez les Agros, y'a Apér'Agro",
-                    "Un verre acheté, une baleine sauvée",
-                    'Un verre acheté, un éléphant sauvé',
-                    'Un verre acheté, une loutre sauvée',
-                    "Un verre acheté, un lama sauvé",
-                    "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !",
-                    "Les Agros ne vous connaissent pas mais vous aiment déjà",
-                    "Viens planter des baleines autour d'un verre",
-                    "Viens planter des éléphants autour d'un verre",
-                    "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir !",
-                    'Les Agros, ça suffit, vous êtes trop chauds !',
-                ]
-                await message.reply(choice(answer_choices))
-
-            # Search if message contains beers emoji
-            elif '🍺' in message.content or '🍻' in message.content and random_number < 40:
-                answer_choices = [
-                    "A la tienne ! 😀",
-                    "Oh je vois des bières par ici 😁",
-                    'Tchin ! 🍻',
-                    'Apéro ? 😄'
-                ]
-                await message.reply(choice(answer_choices))
+                # Search if message contains beers emoji
+                elif '🍺' in message.content or '🍻' in message.content and random_number < 40:
+                    answer_choices = [
+                        "A la tienne ! 😀",
+                        "Oh je vois des bières par ici 😁",
+                        'Tchin ! 🍻',
+                        'Apéro ? 😄'
+                    ]
+                    await message.reply(choice(answer_choices))
 
         await self.process_commands(message)
 
-    async def on_member_update(self, before, after):
+    async def on_member_update(self, before: Member, after: Member):
+        print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
         emojis_before = set(distinct_emoji_lis(before.nick))
         emojis_after = set(distinct_emoji_lis(after.nick))
         new_emojis = emojis_after.difference(emojis_before)
