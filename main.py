@@ -7,7 +7,7 @@ from random import choice, randint
 
 import requests
 
-from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member
+from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member, Forbidden
 from discord.ext.commands import Bot
 from dotenv import load_dotenv
 from emoji import emoji_lis, distinct_emoji_lis
@@ -120,22 +120,38 @@ class MyBot(Bot):
         await self.process_commands(message)
 
     async def on_member_update(self, before: Member, after: Member):
+        if after.nick == before.nick:
+            return
         print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
-        emojis_before = set(distinct_emoji_lis(before.nick))
-        emojis_after = set(distinct_emoji_lis(after.nick))
-        new_emojis = emojis_after.difference(emojis_before)
-        first_message = True
-        for emoji in new_emojis:
-            if emoji in planet_videos.keys():
-                if first_message:
+        emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
+        if after.nick:
+            emojis_after = set(distinct_emoji_lis(after.nick))
+            new_emojis = emojis_after.difference(emojis_before)
+            joined_planet = []
+            for emoji in new_emojis:
+                # Replace the loupe emoji if it is in the wrong way
+                if emoji == '🔎':
+                    emoji = '🔍'
+                    try:
+                        await after.edit(nick=after.nick.replace('🔎', '🔍'))
+                    except Forbidden:
+                        print(f'Impossible de modifier le pseudo de {after}')
+                if emoji in planet_videos.keys():
+                    joined_planet.append(emoji)
+
+            if joined_planet:
+                message = 'Oh, je viens de voir que tu viens de mettre à jour ' \
+                          'ton pseudo sur le serveur de Time et que tu as rejoint '
+                if len(joined_planet) == 1:
+                    message += 'une nouvelle planète !\n' \
+                                'Voici donc la vidéo de présentation de cette planète ☺'
+                else:
+                    message += 'de nouvelles planètes !\n' \
+                               'Voici donc les vidéos de présentation de ces planètes ☺'
+                await after.send(message)
+                for emoji in joined_planet:
                     await after.send(
-                        'Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le serveur de Time et que '
-                        'tu as rejoins de nouvelles planètes !\n'
-                        'Voici donc les vidéos de présentation de ces planètes ☺'
-                    )
-                    first_message = False
-                await after.send(
-                    f'Planète {emoji} {planet_videos[emoji]["label"]} : {planet_videos[emoji]["url"]}')
+                        f'Planète {emoji} {planet_videos[emoji]["label"]} : {planet_videos[emoji]["url"]}')
 
 
 if __name__ == '__main__':
