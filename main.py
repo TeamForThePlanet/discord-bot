@@ -10,7 +10,9 @@ import requests
 from discord import ChannelType, File, Intents, Embed
 from discord.ext.commands import Bot
 from dotenv import load_dotenv
-from emoji import emoji_lis
+from emoji import emoji_lis, distinct_emoji_lis
+
+from planet_videos import planet_videos
 
 load_dotenv()
 
@@ -113,6 +115,23 @@ class MyBot(Bot):
                 await message.reply(choice(answer_choices))
 
         await self.process_commands(message)
+
+    async def on_member_update(self, before, after):
+        emojis_before = set(distinct_emoji_lis(before.nick))
+        emojis_after = set(distinct_emoji_lis(after.nick))
+        new_emojis = emojis_after.difference(emojis_before)
+        first_message = True
+        for emoji in new_emojis:
+            if emoji in planet_videos.keys():
+                if first_message:
+                    await after.send(
+                        'Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le serveur de Time et que '
+                        'tu as rejoins de nouvelles planètes !\n'
+                        'Voici donc les vidéos de présentation de ces planètes ☺'
+                    )
+                    first_message = False
+                await after.send(
+                    f'Planète {emoji} {planet_videos[emoji]["label"]} : {planet_videos[emoji]["url"]}')
 
 
 if __name__ == '__main__':
