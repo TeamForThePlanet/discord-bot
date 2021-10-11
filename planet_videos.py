@@ -9,7 +9,7 @@ planet_videos = {
     },
     '🔍': {
         'label': 'Evaluateurs',
-        'url': 'https://www.youtube.com/watch?v=UD7eIVPcMdw',
+        'url': 'https://www.youtube.com/watch?v=UdiNEjZ69Lk',
     },
     '🔬': {
         'label': 'Scientifiques',
