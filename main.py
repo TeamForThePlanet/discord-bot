@@ -19,6 +19,7 @@ load_dotenv()
 
 print_information = False
 target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
+target_english_guild_id = int(os.getenv('TARGET_ENGLISH_GUILD_ID', default=0))
 
 
 class MyBot(Bot):
@@ -159,7 +160,6 @@ if __name__ == '__main__':
     intents = Intents.default()
     intents.members = True
     bot = MyBot(command_prefix='!', intents=intents)
-    bot = MyBot(command_prefix='!', intents=intents)
 
     slash = SlashCommand(bot, sync_commands=True)
 
@@ -265,18 +265,16 @@ if __name__ == '__main__':
             await ctx.message.reply('Aucun résultat pour votre recherche...')
 
 
-    @slash.slash(
-        name="quarks-a-accueillir",
-        aliases=['quarks-à-accueillir', 'quarks-to-welcome'],
-        description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
-        guild_ids=[target_guild_id]
-    )
     async def quarks_to_welcome(ctx):
-        filename = 'quarks à accueillir.csv'
+        fr = ctx.guild.id != target_english_guild_id
+        filename = 'quarks à accueillir.csv' if fr else "quarks to welcome.csv"
         written = False
         with open(filename, 'w', encoding='utf-8', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur'])
+            headers = ['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur']
+            if not fr:
+                headers = ['Discord username', 'Time server nickname', 'Joining date']
+            writer.writerow(headers)
             for member in ctx.guild.members:
                 if not member.bot and '*' not in member.display_name:
                     writer.writerow([
@@ -289,15 +287,31 @@ if __name__ == '__main__':
         if written:
             # Send file to Discord in message
             with open(filename, 'rb') as file:
-                await ctx.message.reply(
-                    "Fichier CSV contenant la liste des quarks n'ayant pas d'astérique dans leur nom :",
-                    file=File(file, filename)
-                )
+                message = "Fichier CSV contenant la liste des quarks n'ayant pas d'astérique dans leur pseudo :"
+                if not fr:
+                    message = "CSV file containing the list of quarks who don't have an asterisk in their nickname :"
+                await ctx.reply(message, file=File(file, filename))
         else:
-            await ctx.message.reply('Aucun quarks à accueillir 😮')
+            await ctx.reply(
+                'Aucun quarks à accueillir 😮' if fr else "No quarks to welcome 😮"
+            )
         # Delete file at the end of processing
         os.remove(filename)
 
+
+    slash.add_slash_command(
+        quarks_to_welcome,
+        name='quarks-a-accueillir',
+        description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
+        guild_ids=[target_guild_id]
+    )
+    if target_english_guild_id:
+        slash.add_slash_command(
+            quarks_to_welcome,
+            name='quarks-to-welcome',
+            description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
+            guild_ids=[target_english_guild_id]
+        )
 
     @bot.command(name='bot-info')
     async def get_bot_information(ctx):
