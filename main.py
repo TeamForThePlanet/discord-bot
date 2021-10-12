@@ -302,14 +302,14 @@ if __name__ == '__main__':
     slash.add_slash_command(
         quarks_to_welcome,
         name='quarks-a-accueillir',
-        description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
+        description="Génère un fichier CSV contenant la liste des quarks n'ayant pas été accueillis",
         guild_ids=[target_guild_id]
     )
     if target_english_guild_id:
         slash.add_slash_command(
             quarks_to_welcome,
             name='quarks-to-welcome',
-            description="Génère un fichier texte contenant la liste des quarks n'ayant pas été accueillis",
+            description="Generate a CSV file containing the list of quarks who had not been welcomed yet",
             guild_ids=[target_english_guild_id]
         )
 
