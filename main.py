@@ -170,39 +170,40 @@ if __name__ == '__main__':
         await ctx.send(f"Pong ! ({round(bot.latency * 1000, 5)} ms)")
 
     async def mention_planet_members(ctx, emoji=None, channel: GuildChannel = None, salon=None):
-        # salon is an alias for channel
-        channel = salon if salon else channel
+        async with ctx.channel.typing():
+            # salon is an alias for channel
+            channel = salon if salon else channel
 
-        fr = ctx.guild.id != target_english_guild_id
+            fr = ctx.guild.id != target_english_guild_id
 
-        bot.planet_mention_count += 1
-        print(f'{emoji=}')
+            bot.planet_mention_count += 1
+            print(f'{emoji=}')
 
-        # Create a list with all emojis found in the emoji parameter
-        emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
+            # Create a list with all emojis found in the emoji parameter
+            emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
 
-        # Add emoji of the selected channel name if it exists at the beginning of the name
-        if channel:
-            emoji_list = emoji_lis(str(channel))
-            if emoji_list and emoji_list[0]['location'] == 0:
-                emojis.append(emoji_list[0]['emoji'])
-            else:
-                await ctx.reply(
-                    f"{channel.mention} n'est pas un salon de planète ou bien n'a pas d'emoji associé." if fr
-                    else f"{channel.mention} is not a planet channel or it doesn't have an associated emoji."
-                )
-                return
+            # Add emoji of the selected channel name if it exists at the beginning of the name
+            if channel:
+                emoji_list = emoji_lis(str(channel))
+                if emoji_list and emoji_list[0]['location'] == 0:
+                    emojis.append(emoji_list[0]['emoji'])
+                else:
+                    await ctx.reply(
+                        f"{channel.mention} n'est pas un salon de planète ou bien n'a pas d'emoji associé." if fr
+                        else f"{channel.mention} is not a planet channel or it doesn't have an associated emoji."
+                    )
+                    return
 
-        print('emojis : ', str(emojis))
+            print('emojis : ', str(emojis))
 
-        # Search the emoji in the nickname of all guild members
-        members_to_ping = []
-        for member in ctx.guild.members:
-            # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
-            for emoji in emojis:
-                if emoji in member.display_name:
-                    members_to_ping.append(member)
-                    break
+            # Search the emoji in the nickname of all guild members
+            members_to_ping = []
+            for member in ctx.guild.members:
+                # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
+                for emoji in emojis:
+                    if emoji in member.display_name:
+                        members_to_ping.append(member)
+                        break
 
         # Ping all targeted members if at least one has been found
         if members_to_ping:
@@ -318,41 +319,42 @@ if __name__ == '__main__':
         guild_ids=[target_guild_id]
     )
     async def search_links(ctx, query: str):
-        bot.search_links_count += 1
-        found_links = []
+        async with ctx.channel.typing():
+            bot.search_links_count += 1
+            found_links = []
 
-        # Prepare request to ShortIO app
-        url = 'https://api.short.io/api/links'
-        querystring = {'domain_id': os.getenv('SHORT_IO_DOMAIN_ID')}
-        headers = {
-            'Accept': 'application/json',
-            'Authorization': os.getenv('SHORT_IO_SECRET_KEY')
-        }
-        response = requests.get(url, headers=headers, params=querystring)
+            # Prepare request to ShortIO app
+            url = 'https://api.short.io/api/links'
+            querystring = {'domain_id': os.getenv('SHORT_IO_DOMAIN_ID')}
+            headers = {
+                'Accept': 'application/json',
+                'Authorization': os.getenv('SHORT_IO_SECRET_KEY')
+            }
+            response = requests.get(url, headers=headers, params=querystring)
 
-        # Loop through each links and add it to found_links if one of the args is matching
-        for link in response.json()['links']:
-            # Ignore archived links
-            if link['archived']:
-                continue
+            # Loop through each links and add it to found_links if one of the args is matching
+            for link in response.json()['links']:
+                # Ignore archived links
+                if link['archived']:
+                    continue
 
-            for arg in query.split(' '):
-                # Stop searching if link has been added
-                if link in found_links:
-                    break
-
-                # Check if in one of the fields is matching one of the args
-                for field in ('title', 'originalURL'):
-                    if arg.lower() in link[field].lower():
-                        found_links.append(link)
+                for arg in query.split(' '):
+                    # Stop searching if link has been added
+                    if link in found_links:
                         break
 
-                # Check in the tags if link is still not in found_links
-                if link not in found_links:
-                    for tag in link['tags']:
-                        if arg.lower() in tag.lower():
+                    # Check if in one of the fields is matching one of the args
+                    for field in ('title', 'originalURL'):
+                        if arg.lower() in link[field].lower():
                             found_links.append(link)
                             break
+
+                    # Check in the tags if link is still not in found_links
+                    if link not in found_links:
+                        for tag in link['tags']:
+                            if arg.lower() in tag.lower():
+                                found_links.append(link)
+                                break
 
         if found_links:
             await ctx.reply(f'Voici les résultats de votre recherche "{query}":')
@@ -372,23 +374,24 @@ if __name__ == '__main__':
 
 
     async def quarks_to_welcome(ctx):
-        fr = ctx.guild.id != target_english_guild_id
-        filename = 'quarks à accueillir.csv' if fr else "quarks to welcome.csv"
-        written = False
-        with open(filename, 'w', encoding='utf-8', newline='') as file:
-            writer = csv.writer(file)
-            headers = ['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur']
-            if not fr:
-                headers = ['Discord username', 'Time server nickname', 'Joining date']
-            writer.writerow(headers)
-            for member in ctx.guild.members:
-                if not member.bot and '*' not in member.display_name:
-                    writer.writerow([
-                        str(member),
-                        member.nick or '',
-                        member.joined_at.strftime('%d/%m/%Y %H:%M')]
-                    )
-                    written = True
+        async with ctx.channel.typing():
+            fr = ctx.guild.id != target_english_guild_id
+            filename = 'quarks à accueillir.csv' if fr else "quarks to welcome.csv"
+            written = False
+            with open(filename, 'w', encoding='utf-8', newline='') as file:
+                writer = csv.writer(file)
+                headers = ['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur']
+                if not fr:
+                    headers = ['Discord username', 'Time server nickname', 'Joining date']
+                writer.writerow(headers)
+                for member in ctx.guild.members:
+                    if not member.bot and '*' not in member.display_name:
+                        writer.writerow([
+                            str(member),
+                            member.nick or '',
+                            member.joined_at.strftime('%d/%m/%Y %H:%M')]
+                        )
+                        written = True
 
         if written:
             # Send file to Discord in message
