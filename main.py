@@ -251,7 +251,7 @@ if __name__ == '__main__':
                     name='emoji',
                     description="Indicate the planet emoji",
                     option_type=3,
-                    required=True
+                    required=False
                 ),
                 create_option(
                     name='channel',
