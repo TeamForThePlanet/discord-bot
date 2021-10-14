@@ -8,6 +8,7 @@ from random import choice, randint
 import requests
 
 from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member, Forbidden
+from discord.abc import GuildChannel
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand
 from discord_slash.utils.manage_commands import create_option
@@ -164,27 +165,33 @@ if __name__ == '__main__':
 
     slash = SlashCommand(bot, sync_commands=True)
 
-
     @slash.slash(name="ping", description='Teste de la connexion avec le Bot', guild_ids=[target_guild_id])
     async def _ping(ctx):  # Defines a new "context" (ctx) command called "ping."
         await ctx.send(f"Pong ! ({round(bot.latency * 1000, 5)} ms)")
 
+    async def mention_planet_members(ctx, emoji=None, channel: GuildChannel = None, salon=None):
+        # salon is an alias for channel
+        channel = salon if salon else channel
 
-    @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète', 'notify-the-planet'])
-    async def mention_planet_members(ctx, *args):
+        fr = ctx.guild.id != target_english_guild_id
+
         bot.planet_mention_count += 1
-        print(ctx.message.content)
+        print(f'{emoji=}')
 
-        # Create a list with all emojis to search in usernames
-        emojis = []
-        # Add mentioned channels name in the args list
-        for channel in ctx.message.channel_mentions:
-            args += (channel.name,)
-        # Foreach args, check if it starts with an emoji then add it to the emojis list
-        for arg in args:
-            emoji_list = emoji_lis(arg)
+        # Create a list with all emojis found in the emoji parameter
+        emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
+
+        # Add emoji of the selected channel name if it exists at the beginning of the name
+        if channel:
+            emoji_list = emoji_lis(str(channel))
             if emoji_list and emoji_list[0]['location'] == 0:
                 emojis.append(emoji_list[0]['emoji'])
+            else:
+                await ctx.reply(
+                    f"{channel.mention} n'est pas un salon de planète ou bien n'a pas d'emoji associé." if fr
+                    else f"{channel.mention} is not a planet channel or it doesn't have an associated emoji."
+                )
+                return
 
         print('emojis : ', str(emojis))
 
@@ -203,11 +210,57 @@ if __name__ == '__main__':
             offset = 80
             for start in range(1 + (len(members_to_ping) - 1) // offset):
                 start = start * offset
-                await ctx.message.reply(
+                await ctx.reply(
                     ' '.join(user.mention for user in members_to_ping[start:start + offset])
                 )
         else:
-            await ctx.message.reply('Aucun utilisateur à mentionner...')
+            await ctx.reply(
+                'Aucun utilisateur à mentionner...' if fr else 'No user to mention...'
+            )
+
+
+    slash.add_slash_command(
+        mention_planet_members,
+        name='alerte-la-planète',
+        description="Créé une alerte pour toutes les membres d'une planète. "
+                    "Veuiller saisir un emoji ou choisir un salon.",
+        options=[
+            create_option(
+                name='emoji',
+                description="Indiquer l'émoji de la planète à alerter",
+                option_type=3,
+                required=False
+            ),
+            create_option(
+                name='salon',
+                description="Choisir le salon d'une planète à alerter",
+                option_type=7,
+                required=False
+            )
+        ],
+        guild_ids=[target_guild_id]
+    )
+    if target_english_guild_id:
+        slash.add_slash_command(
+            mention_planet_members,
+            name='notify-the-planet',
+            description="Create an alert to every planet members. Please type an emojo or select a channel.",
+            options=[
+                create_option(
+                    name='emoji',
+                    description="Indicate the planet emoji",
+                    option_type=3,
+                    required=True
+                ),
+                create_option(
+                    name='channel',
+                    description="Choose a planet channel to alert",
+                    option_type=7,
+                    required=False
+                )
+            ],
+            guild_ids=[target_english_guild_id]
+        )
 
     @slash.slash(
         name="cherche-des-liens",
