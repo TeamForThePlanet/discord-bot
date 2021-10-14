@@ -21,6 +21,8 @@ TARGET_GUILD_ID={Discord Server ID goes here}
 SHORT_IO_SECRET_KEY={Secret key from Short.io goes here}
 SHORT_IO_DOMAIN_ID={Your domain ID from Short.io goes here}
 
+COMMAND_PREFIX={You can change the default command prefix "!"}
+
 CREATOR_ID={Your Discord User ID}
 ```
 

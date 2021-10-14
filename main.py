@@ -160,7 +160,7 @@ class MyBot(Bot):
 if __name__ == '__main__':
     intents = Intents.default()
     intents.members = True
-    bot = MyBot(command_prefix='$', intents=intents)
+    bot = MyBot(command_prefix=os.getenv('COMMAND_PREFIX', '!'), intents=intents)
 
     slash = SlashCommand(bot, sync_commands=True)
 
