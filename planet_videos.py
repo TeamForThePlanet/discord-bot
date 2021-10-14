@@ -91,4 +91,8 @@ planet_videos = {
         'label': 'Growth Hacking',
         'url': 'https://www.youtube.com/watch?v=TnuyViReMxU',
     },
+    '👾': {
+        'label': 'MADA',
+        'url': 'https://www.youtube.com/watch?v=8ukXX0G0BBg',
+    }
 }

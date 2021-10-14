@@ -154,8 +154,17 @@ class MyBot(Bot):
                                'Voici donc les vidéos de présentation de ces planètes ☺'
                 await after.send(message)
                 for emoji in joined_planet:
-                    await after.send(
-                        f'Planète {emoji} {planet_videos[emoji]["label"]} : {planet_videos[emoji]["url"]}')
+                    if emoji == '👾':
+                        await after.send(
+                            f'Planète {emoji} {planet_videos[emoji]["label"]} 😱\nTu t\'engages à fond dans la '
+                            f'Galaxie de l’Action ! Merci à toi 😁\n\nUne bande de quarks ont écouté avec intérêt cette '
+                            f'table ronde animée par Nicolas et t’en conseille vivement l’écoute : '
+                            f'{planet_videos[emoji]["url"]}'
+                        )
+                    else:
+                        await after.send(
+                            f'Planète {emoji} {planet_videos[emoji]["label"]} : {planet_videos[emoji]["url"]}'
+                        )
 
 
 if __name__ == '__main__':
