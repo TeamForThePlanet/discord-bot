@@ -2,6 +2,7 @@ import csv
 
 import os
 import re
+from contextlib import AsyncExitStack
 from datetime import datetime
 from random import choice, randint
 
@@ -179,15 +180,16 @@ if __name__ == '__main__':
         await ctx.send(f"Pong ! ({round(bot.latency * 1000, 5)} ms)")
 
     async def mention_planet_members(ctx, emoji=None, channel: GuildChannel = None, salon=None):
-        async with ctx.channel.typing():
-            # salon is an alias for channel
-            channel = salon if salon else channel
+        fr = ctx.guild.id != target_english_guild_id
 
-            fr = ctx.guild.id != target_english_guild_id
+        bot.planet_mention_count += 1
 
-            bot.planet_mention_count += 1
-            print(f'{emoji=}')
+        # salon is an alias for channel
+        channel = salon if salon else channel
 
+        print(f'{emoji=}')
+
+        async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
             # Create a list with all emojis found in the emoji parameter
             emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
 
@@ -328,7 +330,7 @@ if __name__ == '__main__':
         guild_ids=[target_guild_id]
     )
     async def search_links(ctx, query: str):
-        async with ctx.channel.typing():
+        async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
             bot.search_links_count += 1
             found_links = []
 
@@ -383,7 +385,7 @@ if __name__ == '__main__':
 
 
     async def quarks_to_welcome(ctx):
-        async with ctx.channel.typing():
+        async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
             fr = ctx.guild.id != target_english_guild_id
             filename = 'quarks à accueillir.csv' if fr else "quarks to welcome.csv"
             written = False
