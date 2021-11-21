@@ -193,6 +193,10 @@ if __name__ == '__main__':
             # Create a list with all emojis found in the emoji parameter
             emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
 
+            # If no emoji or no channel has been passed, take by default the channel where the command was executed
+            if not emojis and not channel:
+                channel = ctx.channel
+
             # Add emoji of the selected channel name if it exists at the beginning of the name
             if channel:
                 emoji_list = emoji_lis(str(channel))
