@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1\n"
 "Report-Msgid-Bugs-To: benbb96@gmail.com\n"
-"POT-Creation-Date: 2021-12-24 00:34+0100\n"
+"POT-Creation-Date: 2021-12-24 16:03+0100\n"
 "PO-Revision-Date: 2021-12-24 00:39+0100\n"
 "Last-Translator: Benbb96 <benbb96@gmail.com>\n"
 "Language: en\n"
@@ -17,158 +17,166 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: main.py:1
+#: main.py:91
 #, python-format
 msgid "Bravo ! Tu viens de proposer la %s ème mention du mot apéro ce mois-ci 🥳🍹"
-msgstr "Well done ! You've just done the %s mention of the word drink this month 🥳🍹"
+msgstr ""
+"Well done ! You've just done the %s mention of the word drink this month "
+"🥳🍹"
 
-#: main.py:1
+#: main.py:95
 msgid "On parle toujours d'apéro ici ! 😮"
 msgstr "We're always talking about drinking here! 😮"
 
-#: main.py:1
+#: main.py:96
 msgid "J'ai cru entendre parler d'apéro ? 😄"
 msgstr "Did I hear something about happy hour? 😄"
 
-#: main.py:1
+#: main.py:97
 msgid "\"Il faut apéroiser le changement climatique !\" 😁"
 msgstr "\"Let's drink for Climate Change!\" 😁"
 
-#: main.py:1
+#: main.py:98
 msgid "Encore un apéro ? 😛"
 msgstr "Happy hour again? 😛"
 
-#: main.py:1
+#: main.py:99
 msgid "Où ça un apéro !? 😅"
 msgstr "Where is that happy hour!? 😅"
 
-#: main.py:1
+#: main.py:100
 msgid "Vivement l'apéro du 20 à 20h20 ! 😁"
 msgstr "Can't wait for the drink on the 20th at 20:20! 😁"
 
-#: main.py:1
+#: main.py:101
 msgid "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉"
 msgstr "Think about preparing 2 lies and 1 truth to animate the happy hour 😉"
 
-#: main.py:1
+#: main.py:102
 msgid "Et... Il y aura du Ricard à cet apéro ? 😍"
 msgstr "And... will there be Ricard at this happy hour? 😍"
 
-#: main.py:1
+#: main.py:103
 msgid "Tu prévois le cidre aussi ? (pour les bretons !)"
 msgstr "Are you planning the cider too? (for the Bretons!)"
 
-#: main.py:1
+#: main.py:104
 msgid "Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓"
 msgstr "Aperitif (male name): Latin apertivus meaning open 🤓"
 
-#: main.py:1
+#: main.py:105
 msgid "Euh... Vous avez prévenu <@!696086695283523604> de cet apéro ? 😱"
 msgstr "Uh... Did you warned <@!696086695283523604> about this drink? 😱"
 
-#: main.py:1
+#: main.py:106
 msgid "<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄"
 msgstr "<@!696086695283523604> signed off on that happy hour? 😄"
 
-#: main.py:1
+#: main.py:107
 msgid "C'est chez <@!696086695283523604> l'apéro ? 😂"
 msgstr "Is that <@!696086695283523604>'s happy hour? 😂"
 
-#: main.py:1
+#: main.py:108
 msgid "Qui s'occupe de préparer des mojitos ? 🍹🍸"
 msgstr "Who takes care of making mojitos ? 🍹🍸"
 
-#: main.py:1
+#: main.py:109
 msgid "Eh bah alors ! On n'attend pas Patrick ? 😤"
 msgstr "Well then! Aren’t we waiting for Patrick? 😤"
 
-#: main.py:1
+#: main.py:112
 msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
 msgstr "Isn’t it a little early to start the happy hour? 😂"
 
-#: main.py:1
+#: main.py:118
 msgid "Rejoignez les Agros, y'a Apér'Agro"
 msgstr "Join the Agros, it is Apér'Agro"
 
-#: main.py:1
+#: main.py:119
 msgid "Un verre acheté, une baleine sauvée"
 msgstr "A glass bought, a whale saved"
 
-#: main.py:1
+#: main.py:120
 msgid "Un verre acheté, un éléphant sauvé"
 msgstr "A glass bought, an elephant saved"
 
-#: main.py:1
+#: main.py:121
 msgid "Un verre acheté, une loutre sauvée"
 msgstr "A glass bought, an otter saved"
 
-#: main.py:1
+#: main.py:122
 msgid "Un verre acheté, un lama sauvé"
 msgstr "A glass bought, a saved lama"
 
-#: main.py:1
+#: main.py:123
 msgid "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !"
 msgstr "Come to the Apér'Agro, the Agros are as hot as the climate!"
 
-#: main.py:1
+#: main.py:124
 msgid "Les Agros ne vous connaissent pas mais vous aiment déjà"
 msgstr "The Agros do not know you but already love you"
 
-#: main.py:1
+#: main.py:125
 msgid "Viens planter des baleines autour d'un verre"
 msgstr "Come plant whales around a glass"
 
-#: main.py:1
+#: main.py:126
 msgid "Viens planter des éléphants autour d'un verre"
 msgstr "Come and plant elephants around a glass"
 
-#: main.py:1
+#: main.py:127
 msgid ""
 "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir"
 " !"
-msgstr "Come and support the agricultural and viticultural sectors with the Agros tonight!"
+msgstr ""
+"Come and support the agricultural and viticultural sectors with the Agros"
+" tonight!"
 
-#: main.py:1
+#: main.py:128
 msgid "Les Agros, ça suffit, vous êtes trop chauds !"
 msgstr "The Agros, that’s enough, you’re too hot!"
 
-#: main.py:1
+#: main.py:135
 msgid "A la tienne ! 😀"
 msgstr "Here’s to you now! 😀"
 
-#: main.py:1
+#: main.py:136
 msgid "Oh je vois des bières par ici 😁"
 msgstr "Oh I see beers around here 😁"
 
-#: main.py:1
+#: main.py:137
 msgid "Tchin ! 🍻"
 msgstr "Tchin ! 🍻"
 
-#: main.py:1
+#: main.py:138
 msgid "Apéro ? 😄"
 msgstr "Happy Hour? 😄"
 
-#: main.py:1
+#: main.py:167
 msgid ""
 "Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le "
 "serveur de Time et que tu as rejoint "
-msgstr "Oh, I just saw that you just updated your username on the Time server and joined"
+msgstr ""
+"Oh, I just saw that you just updated your username on the Time server and"
+" joined"
 
-#: main.py:1
+#: main.py:170
 msgid ""
 "une nouvelle planète !\n"
 "Voici donc la vidéo de présentation de cette planète ☺"
-msgstr "a new planet!\n"
+msgstr ""
+"a new planet!\n"
 "Here is the presentation video of this planet ☺"
 
-#: main.py:1
+#: main.py:172
 msgid ""
 "de nouvelles planètes !\n"
 "Voici donc les vidéos de présentation de ces planètes ☺"
-msgstr "new planets!\n"
+msgstr ""
+"new planets!\n"
 "So here are the videos presenting these planets ☺"
 
-#: main.py:1
+#: main.py:176
 #, python-format
 msgid "Planète %s %s : %s"
 msgstr "Planet %s %s : %s"
