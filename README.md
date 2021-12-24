@@ -71,6 +71,6 @@ If the locale doesn't exist in the locale directory, you'll want to init that lo
 
     pybabel init -d locale -l it -i locale/base.pot
 
-Finally, after editing `.mo` files, you can compile translations in a `.po` file with this command:
+Finally, after editing `.po` files, you can compile translations in a `.mo` file with this command:
 
     pybabel compile -d locale
