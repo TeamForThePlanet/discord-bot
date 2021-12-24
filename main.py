@@ -4,7 +4,7 @@ import os
 import re
 from contextlib import AsyncExitStack
 from datetime import datetime
-from functools import cache
+from functools import lru_cache
 from random import choice, randint
 
 import requests
@@ -21,7 +21,7 @@ from emoji import emoji_lis, distinct_emoji_lis
 from planet_videos import planet_videos
 
 
-@cache
+@lru_cache
 def get_translator(lang: str = 'fr_FR'):
     trans = gettext.translation('messages', localedir="locale", languages=(lang,))
     return trans.gettext
