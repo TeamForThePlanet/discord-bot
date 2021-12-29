@@ -22,3 +22,11 @@ jobs:
             source venv/bin/activate
             git pull
             pip install -r requirements.txt
+      - name: Request to restart always-on task
+        id: request
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://eu.pythonanywhere.com/api/v0/user/benbb96/always_on/1247/restart/"
+          customHeaders: '{"Authorization": "Token ${{ secrets.PYTHON_ANYWHERE_API_TOKEN }}"}'
+      - name: Show Response
+        run: echo ${{ steps.request.outputs.response }}
