@@ -162,7 +162,7 @@ class MyBot(Bot):
                     joined_planet.append(emoji)
 
             if joined_planet:
-                _ = get_translator('en' if after.guild.id == target_english_guild_id else None)
+                _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
 
                 message = _('Oh, je viens de voir que tu viens de mettre à jour '
                             'ton pseudo sur le serveur de Time et que tu as rejoint ')
