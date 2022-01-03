@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1\n"
 "Report-Msgid-Bugs-To: benbb96@gmail.com\n"
-"POT-Creation-Date: 2021-12-24 16:03+0100\n"
+"POT-Creation-Date: 2022-01-03 23:51+0100\n"
 "PO-Revision-Date: 2021-12-24 00:39+0100\n"
 "Last-Translator: Benbb96 <benbb96@gmail.com>\n"
 "Language: fr_FR\n"
@@ -78,95 +78,101 @@ msgstr ""
 msgid "Qui s'occupe de préparer des mojitos ? 🍹🍸"
 msgstr ""
 
-#: main.py:109
+#: main.py:109 main.py:111
 msgid "Eh bah alors ! On n'attend pas Patrick ? 😤"
 msgstr ""
 
-#: main.py:112
+#: main.py:110
+msgid ""
+"Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, "
+"t'inquiète 😉 🍸"
+msgstr ""
+
+#: main.py:114
 msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
 msgstr ""
 
-#: main.py:118
+#: main.py:120
 msgid "Rejoignez les Agros, y'a Apér'Agro"
 msgstr ""
 
-#: main.py:119
+#: main.py:121
 msgid "Un verre acheté, une baleine sauvée"
 msgstr ""
 
-#: main.py:120
+#: main.py:122
 msgid "Un verre acheté, un éléphant sauvé"
 msgstr ""
 
-#: main.py:121
+#: main.py:123
 msgid "Un verre acheté, une loutre sauvée"
 msgstr ""
 
-#: main.py:122
+#: main.py:124
 msgid "Un verre acheté, un lama sauvé"
 msgstr ""
 
-#: main.py:123
+#: main.py:125
 msgid "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !"
 msgstr ""
 
-#: main.py:124
+#: main.py:126
 msgid "Les Agros ne vous connaissent pas mais vous aiment déjà"
 msgstr ""
 
-#: main.py:125
+#: main.py:127
 msgid "Viens planter des baleines autour d'un verre"
 msgstr ""
 
-#: main.py:126
+#: main.py:128
 msgid "Viens planter des éléphants autour d'un verre"
 msgstr ""
 
-#: main.py:127
+#: main.py:129
 msgid ""
 "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir"
 " !"
 msgstr ""
 
-#: main.py:128
+#: main.py:130
 msgid "Les Agros, ça suffit, vous êtes trop chauds !"
 msgstr ""
 
-#: main.py:135
+#: main.py:137
 msgid "A la tienne ! 😀"
 msgstr ""
 
-#: main.py:136
+#: main.py:138
 msgid "Oh je vois des bières par ici 😁"
 msgstr ""
 
-#: main.py:137
+#: main.py:139
 msgid "Tchin ! 🍻"
 msgstr ""
 
-#: main.py:138
+#: main.py:140
 msgid "Apéro ? 😄"
 msgstr ""
 
-#: main.py:167
+#: main.py:169
 msgid ""
 "Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le "
 "serveur de Time et que tu as rejoint "
 msgstr ""
 
-#: main.py:170
+#: main.py:172
 msgid ""
 "une nouvelle planète !\n"
 "Voici donc la vidéo de présentation de cette planète ☺"
 msgstr ""
 
-#: main.py:172
+#: main.py:174
 msgid ""
 "de nouvelles planètes !\n"
 "Voici donc les vidéos de présentation de ces planètes ☺"
 msgstr ""
 
-#: main.py:176
+#: main.py:178
 #, python-format
 msgid "Planète %s %s : %s"
 msgstr ""

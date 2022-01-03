@@ -106,7 +106,8 @@ class MyBot(Bot):
                             _('<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄'),
                             _("C'est chez <@!696086695283523604> l'apéro ? 😂"),
                             _("Qui s'occupe de préparer des mojitos ? 🍹🍸"),
-                            _("Eh bah alors ! On n'attend pas Patrick ? 😤")
+                            _("Eh bah alors ! On n'attend pas Patrick ? 😤"),
+                            _("Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, t'inquiète 😉 🍸")
                         ]
                         if datetime.now().hour < 10:
                             answer_choices.append(_("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"))
