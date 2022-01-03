@@ -22,6 +22,7 @@ jobs:
             source venv/bin/activate
             git pull
             pip install -r requirements.txt
+            pybabel compile -d locale
       - name: Request to restart always-on task
         id: request
         uses: fjogeleit/http-request-action@master
