@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1\n"
 "Report-Msgid-Bugs-To: benbb96@gmail.com\n"
-"POT-Creation-Date: 2022-01-03 23:51+0100\n"
+"POT-Creation-Date: 2022-01-07 18:04+0100\n"
 "PO-Revision-Date: 2021-12-24 00:39+0100\n"
 "Last-Translator: Benbb96 <benbb96@gmail.com>\n"
 "Language: fr_FR\n"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Qui s'occupe de préparer des mojitos ? 🍹🍸"
 msgstr ""
 
-#: main.py:109 main.py:111
+#: main.py:109
 msgid "Eh bah alors ! On n'attend pas Patrick ? 😤"
 msgstr ""
 
@@ -88,91 +88,161 @@ msgid ""
 "t'inquiète 😉 🍸"
 msgstr ""
 
+#: main.py:111
+msgid ""
+"« Le tout-venant a été piraté par les mômes ! Qu'est-ce qu'on fait ? On "
+"se risque sur le bizarre ? »"
+msgstr ""
+
+#: main.py:112
+msgid "Vous avez sorti le vitriol ?"
+msgstr ""
+
+#: main.py:113
+msgid ""
+"Est ce qu'il y aura cette espère de drolerie qu'on buvait dans une petit "
+"taule de Biên Hòa, pas tellement loin de Saïgon ?"
+msgstr ""
+
 #: main.py:114
-msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
+msgid "J'lui trouve un goût de pomme ? Y'en a !"
+msgstr ""
+
+#: main.py:115
+msgid "Il y a 2 choses qui gagnent à vieillir, le bon vin et les amis."
+msgstr ""
+
+#: main.py:116
+msgid "La gourmandise est le péché des bonnes âmes"
+msgstr ""
+
+#: main.py:117
+msgid ""
+"Quand mes amis me manquent, je fais comme pour les échalotes, je les fais"
+" revenir avec du vin blanc "
+msgstr ""
+
+#: main.py:118
+msgid ""
+"Ceux qui disent que le petit déjeuner est le repas le plus important de "
+"la journée ne connaissent pas l’apéro."
+msgstr ""
+
+#: main.py:119
+msgid ""
+"Quel que soit le problème ou la question, l'apéro est toujours la bonne "
+"réponse"
 msgstr ""
 
 #: main.py:120
-msgid "Rejoignez les Agros, y'a Apér'Agro"
+msgid ""
+"Comme disait Pierre Desproges : Je ne bois jamais à outrance, je ne sais "
+"même pas où c'est."
 msgstr ""
 
 #: main.py:121
-msgid "Un verre acheté, une baleine sauvée"
+msgid "un mojito, et tout est plus beau!"
 msgstr ""
 
 #: main.py:122
-msgid "Un verre acheté, un éléphant sauvé"
+msgid "Ceux qui cherchent midi à 14h ratent l'heure de l'apéro"
 msgstr ""
 
 #: main.py:123
-msgid "Un verre acheté, une loutre sauvée"
+msgid "Ne pas confondre : ivre de bonheur et ivre de bonne heure"
 msgstr ""
 
 #: main.py:124
-msgid "Un verre acheté, un lama sauvé"
-msgstr ""
-
-#: main.py:125
-msgid "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !"
-msgstr ""
-
-#: main.py:126
-msgid "Les Agros ne vous connaissent pas mais vous aiment déjà"
+msgid ""
+"Quelqu'un sait à quelle page de la bible on trouve la recette pour "
+"changer l'eau en vin ? C'est pour un apéro ce soir 🙃"
 msgstr ""
 
 #: main.py:127
+msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
+msgstr ""
+
+#: main.py:133
+msgid "Rejoignez les Agros, y'a Apér'Agro"
+msgstr ""
+
+#: main.py:134
+msgid "Un verre acheté, une baleine sauvée"
+msgstr ""
+
+#: main.py:135
+msgid "Un verre acheté, un éléphant sauvé"
+msgstr ""
+
+#: main.py:136
+msgid "Un verre acheté, une loutre sauvée"
+msgstr ""
+
+#: main.py:137
+msgid "Un verre acheté, un lama sauvé"
+msgstr ""
+
+#: main.py:138
+msgid "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !"
+msgstr ""
+
+#: main.py:139
+msgid "Les Agros ne vous connaissent pas mais vous aiment déjà"
+msgstr ""
+
+#: main.py:140
 msgid "Viens planter des baleines autour d'un verre"
 msgstr ""
 
-#: main.py:128
+#: main.py:141
 msgid "Viens planter des éléphants autour d'un verre"
 msgstr ""
 
-#: main.py:129
+#: main.py:142
 msgid ""
 "Viens soutenir les filières agricoles et viticoles avec les Agros ce soir"
 " !"
 msgstr ""
 
-#: main.py:130
+#: main.py:143
 msgid "Les Agros, ça suffit, vous êtes trop chauds !"
 msgstr ""
 
-#: main.py:137
+#: main.py:150
 msgid "A la tienne ! 😀"
 msgstr ""
 
-#: main.py:138
+#: main.py:151
 msgid "Oh je vois des bières par ici 😁"
 msgstr ""
 
-#: main.py:139
+#: main.py:152
 msgid "Tchin ! 🍻"
 msgstr ""
 
-#: main.py:140
+#: main.py:153
 msgid "Apéro ? 😄"
 msgstr ""
 
-#: main.py:169
+#: main.py:182
 msgid ""
 "Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le "
 "serveur de Time et que tu as rejoint "
 msgstr ""
 
-#: main.py:172
+#: main.py:185
 msgid ""
 "une nouvelle planète !\n"
 "Voici donc la vidéo de présentation de cette planète ☺"
 msgstr ""
 
-#: main.py:174
+#: main.py:187
 msgid ""
 "de nouvelles planètes !\n"
 "Voici donc les vidéos de présentation de ces planètes ☺"
 msgstr ""
 
-#: main.py:178
+#: main.py:191
 #, python-format
 msgid "Planète %s %s : %s"
 msgstr ""

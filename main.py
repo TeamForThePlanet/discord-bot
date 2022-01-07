@@ -107,7 +107,21 @@ class MyBot(Bot):
                             _("C'est chez <@!696086695283523604> l'apéro ? 😂"),
                             _("Qui s'occupe de préparer des mojitos ? 🍹🍸"),
                             _("Eh bah alors ! On n'attend pas Patrick ? 😤"),
-                            _("Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, t'inquiète 😉 🍸")
+                            _("Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, t'inquiète 😉 🍸"),
+                            _("« Le tout-venant a été piraté par les mômes ! Qu'est-ce qu'on fait ? On se risque sur le bizarre ? »"),
+                            _('Vous avez sorti le vitriol ?'),
+                            _("Est ce qu'il y aura cette espère de drolerie qu'on buvait dans une petit taule de Biên Hòa, pas tellement loin de Saïgon ?"),
+                            _("J'lui trouve un goût de pomme ? Y'en a !"),
+                            _('Il y a 2 choses qui gagnent à vieillir, le bon vin et les amis.'),
+                            _('La gourmandise est le péché des bonnes âmes'),
+                            _('Quand mes amis me manquent, je fais comme pour les échalotes, je les fais revenir avec du vin blanc '),
+                            _('Ceux qui disent que le petit déjeuner est le repas le plus important de la journée ne connaissent pas l’apéro.'),
+                            _("Quel que soit le problème ou la question, l'apéro est toujours la bonne réponse"),
+                            _("Comme disait Pierre Desproges : Je ne bois jamais à outrance, je ne sais même pas où c'est."),
+                            _('un mojito, et tout est plus beau!'),
+                            _("Ceux qui cherchent midi à 14h ratent l'heure de l'apéro"),
+                            _('Ne pas confondre : ivre de bonheur et ivre de bonne heure'),
+                            _("Quelqu'un sait à quelle page de la bible on trouve la recette pour changer l'eau en vin ? C'est pour un apéro ce soir 🙃"),
                         ]
                         if datetime.now().hour < 10:
                             answer_choices.append(_("Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"))
