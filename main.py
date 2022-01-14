@@ -73,7 +73,7 @@ class MyBot(Bot):
                 # Switch to english language if from English Server
                 if message.guild.id == target_english_guild_id:
                     _ = get_translator('en')
-                    apero_regex = r"(drink)|(happy hour)"
+                    apero_regex = r"(drink)|(happy hour)|(HH)|(afterwork)"
                 else:
                     _ = get_translator()
                     apero_regex = r"ap[eé]?ro"
@@ -81,7 +81,7 @@ class MyBot(Bot):
                 # Prepare and random number to add randomness if the bot replies or not
                 random_number = randint(0, 100)
 
-                # Search if message contains "apero"
+                # Search if message triggers the regex
                 if re.search(apero_regex, message.content, re.IGNORECASE):
                     # Reset counter on first day of month
                     if datetime.today().day == 1 and self.apero_count > 50:
