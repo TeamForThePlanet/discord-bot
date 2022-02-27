@@ -73,7 +73,7 @@ class MyBot(Bot):
                 # Switch to english language if from English Server
                 if message.guild.id == target_english_guild_id:
                     _ = get_translator('en')
-                    apero_regex = r"(drink)|(happy hour)|(HH)|(afterwork)"
+                    apero_regex = r"(drink)|(happy hour)| (HH)|(afterwork)"
                 else:
                     _ = get_translator()
                     apero_regex = r"ap[eé]?ro"
