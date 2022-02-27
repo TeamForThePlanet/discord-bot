@@ -100,7 +100,7 @@ msgstr ""
 
 #: main.py:113
 msgid ""
-"Est ce qu'il y aura cette espère de drolerie qu'on buvait dans une petit "
+"Est ce qu'il y aura cette espèce de drolerie qu'on buvait dans une petit "
 "taule de Biên Hòa, pas tellement loin de Saïgon ?"
 msgstr ""
 

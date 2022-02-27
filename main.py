@@ -110,7 +110,7 @@ class MyBot(Bot):
                             _("Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, t'inquiète 😉 🍸"),
                             _("« Le tout-venant a été piraté par les mômes ! Qu'est-ce qu'on fait ? On se risque sur le bizarre ? »"),
                             _('Vous avez sorti le vitriol ?'),
-                            _("Est ce qu'il y aura cette espère de drolerie qu'on buvait dans une petit taule de Biên Hòa, pas tellement loin de Saïgon ?"),
+                            _("Est ce qu'il y aura cette espèce de drolerie qu'on buvait dans une petit taule de Biên Hòa, pas tellement loin de Saïgon ?"),
                             _("J'lui trouve un goût de pomme ? Y'en a !"),
                             _('Il y a 2 choses qui gagnent à vieillir, le bon vin et les amis.'),
                             _('La gourmandise est le péché des bonnes âmes'),
