@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1\n"
 "Report-Msgid-Bugs-To: benbb96@gmail.com\n"
-"POT-Creation-Date: 2022-01-07 18:04+0100\n"
+"POT-Creation-Date: 2022-03-21 16:56+0100\n"
 "PO-Revision-Date: 2021-12-24 00:39+0100\n"
 "Last-Translator: Benbb96 <benbb96@gmail.com>\n"
 "Language: fr_FR\n"
@@ -43,7 +43,7 @@ msgid "Où ça un apéro !? 😅"
 msgstr ""
 
 #: main.py:100
-msgid "Vivement l'apéro du 20 à 20h20 ! 😁"
+msgid "Vivement l'apéro du weekend de la Galaxie de l'Action ! 😁"
 msgstr ""
 
 #: main.py:101

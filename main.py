@@ -97,7 +97,7 @@ class MyBot(Bot):
                             _('"Il faut apéroiser le changement climatique !" 😁'),
                             _('Encore un apéro ? 😛'),
                             _("Où ça un apéro !? 😅"),
-                            _("Vivement l'apéro du 20 à 20h20 ! 😁"),
+                            _("Vivement l'apéro du weekend de la Galaxie de l'Action ! 😁"),
                             _("Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉"),
                             _('Et... Il y aura du Ricard à cet apéro ? 😍'),
                             _('Tu prévois le cidre aussi ? (pour les bretons !)'),

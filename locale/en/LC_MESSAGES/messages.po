@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1\n"
 "Report-Msgid-Bugs-To: benbb96@gmail.com\n"
-"POT-Creation-Date: 2022-01-07 18:04+0100\n"
+"POT-Creation-Date: 2022-03-21 16:56+0100\n"
 "PO-Revision-Date: 2021-12-24 00:39+0100\n"
 "Last-Translator: Benbb96 <benbb96@gmail.com>\n"
 "Language: en\n"
@@ -45,8 +45,8 @@ msgid "Où ça un apéro !? 😅"
 msgstr "Where is that happy hour!? 😅"
 
 #: main.py:100
-msgid "Vivement l'apéro du 20 à 20h20 ! 😁"
-msgstr "Can't wait for the drink on the 20th at 20:20! 😁"
+msgid "Vivement l'apéro du weekend de la Galaxie de l'Action ! 😁"
+msgstr "Can't wait for the Action Galaxy Weekend ! 😁"
 
 #: main.py:101
 msgid "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉"
@@ -94,7 +94,9 @@ msgstr "Drinks? Call a chemist, he/she should have a solution ! 😉 🍸"
 msgid ""
 "« Le tout-venant a été piraté par les mômes ! Qu'est-ce qu'on fait ? On "
 "se risque sur le bizarre ? »"
-msgstr "« The all-comer was hacked by the kids! What are we doing? Are we risking the weird? » [Uncertain translation 😅]"
+msgstr ""
+"« The all-comer was hacked by the kids! What are we doing? Are we risking"
+" the weird? » [Uncertain translation 😅]"
 
 #: main.py:112
 msgid "Vous avez sorti le vitriol ?"
@@ -104,7 +106,9 @@ msgstr "Did you take the vitriol?"
 msgid ""
 "Est ce qu'il y aura cette espèce de drolerie qu'on buvait dans une petit "
 "taule de Biên Hòa, pas tellement loin de Saïgon ?"
-msgstr "Will there be this kind of drolerie that we drank in a small jail in Biên Hòa, not so far from Saigon?"
+msgstr ""
+"Will there be this kind of drolerie that we drank in a small jail in Biên"
+" Hòa, not so far from Saigon?"
 
 #: main.py:114
 msgid "J'lui trouve un goût de pomme ? Y'en a !"
@@ -122,25 +126,33 @@ msgstr "Gluttony is the sin of good souls"
 msgid ""
 "Quand mes amis me manquent, je fais comme pour les échalotes, je les fais"
 " revenir avec du vin blanc "
-msgstr "When I miss my friends, I do as for shallots, I make them come back with white wine"
+msgstr ""
+"When I miss my friends, I do as for shallots, I make them come back with "
+"white wine"
 
 #: main.py:118
 msgid ""
 "Ceux qui disent que le petit déjeuner est le repas le plus important de "
 "la journée ne connaissent pas l’apéro."
-msgstr "Those who say that breakfast is the most important meal of the day do not know the aperitif."
+msgstr ""
+"Those who say that breakfast is the most important meal of the day do not"
+" know the aperitif."
 
 #: main.py:119
 msgid ""
 "Quel que soit le problème ou la question, l'apéro est toujours la bonne "
 "réponse"
-msgstr "Whatever the problem or the question, the aperitif is always the right answer"
+msgstr ""
+"Whatever the problem or the question, the aperitif is always the right "
+"answer"
 
 #: main.py:120
 msgid ""
 "Comme disait Pierre Desproges : Je ne bois jamais à outrance, je ne sais "
 "même pas où c'est."
-msgstr "As Pierre Desproges said: I never drink at outrance, I don't even know where it is."
+msgstr ""
+"As Pierre Desproges said: I never drink at outrance, I don't even know "
+"where it is."
 
 #: main.py:121
 msgid "un mojito, et tout est plus beau!"
@@ -148,7 +160,9 @@ msgstr "a daiquiri, and everything is more pretty!"
 
 #: main.py:122
 msgid "Ceux qui cherchent midi à 14h ratent l'heure de l'apéro"
-msgstr "I'm not alcoholic, I only drink twice a year. When it's my birthday, and when it's not my birthday."
+msgstr ""
+"I'm not alcoholic, I only drink twice a year. When it's my birthday, and "
+"when it's not my birthday."
 
 #: main.py:123
 msgid "Ne pas confondre : ivre de bonheur et ivre de bonne heure"
@@ -158,8 +172,9 @@ msgstr "Alcohol is never the answer... But it does make you forget the question.
 msgid ""
 "Quelqu'un sait à quelle page de la bible on trouve la recette pour "
 "changer l'eau en vin ? C'est pour un apéro ce soir 🙃"
-msgstr "Does anyone know on which page of the bible we find the "
-"recipe for turning water into wine? It's for an aperitif tonight 🙃"
+msgstr ""
+"Does anyone know on which page of the bible we find the recipe for "
+"turning water into wine? It's for an aperitif tonight 🙃"
 
 #: main.py:127
 msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
