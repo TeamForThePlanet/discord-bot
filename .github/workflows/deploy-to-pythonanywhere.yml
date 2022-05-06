@@ -1,0 +1,33 @@
+name: Deploy to PythonAnywhere
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Deploy-Through-SSH:
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency: production
+    steps:
+      - name: Connect via SSH and Deploy new version
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script_stop: true
+          script: |
+            cd discord-bot/
+            source venv/bin/activate
+            git pull
+            pip install -r requirements.txt
+            pybabel compile -d locale
+      - name: Request to restart always-on task
+        id: request
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://eu.pythonanywhere.com/api/v0/user/benbb96/always_on/1247/restart/"
+          customHeaders: '{"Authorization": "Token ${{ secrets.PYTHON_ANYWHERE_API_TOKEN }}"}'
+      - name: Show Response
+        run: echo ${{ steps.request.outputs.response }}

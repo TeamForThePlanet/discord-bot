@@ -1,0 +1,249 @@
+# French (France) translations for .
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the  project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version:  1\n"
+"Report-Msgid-Bugs-To: benbb96@gmail.com\n"
+"POT-Creation-Date: 2022-03-21 16:56+0100\n"
+"PO-Revision-Date: 2021-12-24 00:39+0100\n"
+"Last-Translator: Benbb96 <benbb96@gmail.com>\n"
+"Language: fr_FR\n"
+"Language-Team: fr_FR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: main.py:91
+#, python-format
+msgid "Bravo ! Tu viens de proposer la %s ème mention du mot apéro ce mois-ci 🥳🍹"
+msgstr ""
+
+#: main.py:95
+msgid "On parle toujours d'apéro ici ! 😮"
+msgstr ""
+
+#: main.py:96
+msgid "J'ai cru entendre parler d'apéro ? 😄"
+msgstr ""
+
+#: main.py:97
+msgid "\"Il faut apéroiser le changement climatique !\" 😁"
+msgstr ""
+
+#: main.py:98
+msgid "Encore un apéro ? 😛"
+msgstr ""
+
+#: main.py:99
+msgid "Où ça un apéro !? 😅"
+msgstr ""
+
+#: main.py:100
+msgid "Vivement l'apéro du weekend de la Galaxie de l'Action ! 😁"
+msgstr ""
+
+#: main.py:101
+msgid "Pensez à préparer 2 mensonges et 1 vérité pour animer l'apéro 😉"
+msgstr ""
+
+#: main.py:102
+msgid "Et... Il y aura du Ricard à cet apéro ? 😍"
+msgstr ""
+
+#: main.py:103
+msgid "Tu prévois le cidre aussi ? (pour les bretons !)"
+msgstr ""
+
+#: main.py:104
+msgid "Apéro (nom masculin) : Du latin apertivus qui signifie ouvrir 🤓"
+msgstr ""
+
+#: main.py:105
+msgid "Euh... Vous avez prévenu <@!696086695283523604> de cet apéro ? 😱"
+msgstr ""
+
+#: main.py:106
+msgid "<@!696086695283523604> a bien donné son aval pour cet apéro ? 😄"
+msgstr ""
+
+#: main.py:107
+msgid "C'est chez <@!696086695283523604> l'apéro ? 😂"
+msgstr ""
+
+#: main.py:108
+msgid "Qui s'occupe de préparer des mojitos ? 🍹🍸"
+msgstr ""
+
+#: main.py:109
+msgid "Eh bah alors ! On n'attend pas Patrick ? 😤"
+msgstr ""
+
+#: main.py:110
+msgid ""
+"Un apéro? Il doit y avoir un chimiste dans le coin avec une solution, "
+"t'inquiète 😉 🍸"
+msgstr ""
+
+#: main.py:111
+msgid ""
+"« Le tout-venant a été piraté par les mômes ! Qu'est-ce qu'on fait ? On "
+"se risque sur le bizarre ? »"
+msgstr ""
+
+#: main.py:112
+msgid "Vous avez sorti le vitriol ?"
+msgstr ""
+
+#: main.py:113
+msgid ""
+"Est ce qu'il y aura cette espèce de drolerie qu'on buvait dans une petit "
+"taule de Biên Hòa, pas tellement loin de Saïgon ?"
+msgstr ""
+
+#: main.py:114
+msgid "J'lui trouve un goût de pomme ? Y'en a !"
+msgstr ""
+
+#: main.py:115
+msgid "Il y a 2 choses qui gagnent à vieillir, le bon vin et les amis."
+msgstr ""
+
+#: main.py:116
+msgid "La gourmandise est le péché des bonnes âmes"
+msgstr ""
+
+#: main.py:117
+msgid ""
+"Quand mes amis me manquent, je fais comme pour les échalotes, je les fais"
+" revenir avec du vin blanc "
+msgstr ""
+
+#: main.py:118
+msgid ""
+"Ceux qui disent que le petit déjeuner est le repas le plus important de "
+"la journée ne connaissent pas l’apéro."
+msgstr ""
+
+#: main.py:119
+msgid ""
+"Quel que soit le problème ou la question, l'apéro est toujours la bonne "
+"réponse"
+msgstr ""
+
+#: main.py:120
+msgid ""
+"Comme disait Pierre Desproges : Je ne bois jamais à outrance, je ne sais "
+"même pas où c'est."
+msgstr ""
+
+#: main.py:121
+msgid "un mojito, et tout est plus beau!"
+msgstr ""
+
+#: main.py:122
+msgid "Ceux qui cherchent midi à 14h ratent l'heure de l'apéro"
+msgstr ""
+
+#: main.py:123
+msgid "Ne pas confondre : ivre de bonheur et ivre de bonne heure"
+msgstr ""
+
+#: main.py:124
+msgid ""
+"Quelqu'un sait à quelle page de la bible on trouve la recette pour "
+"changer l'eau en vin ? C'est pour un apéro ce soir 🙃"
+msgstr ""
+
+#: main.py:127
+msgid "Il n'est pas encore un peu tôt pour lancer l'apéro ? 😂"
+msgstr ""
+
+#: main.py:133
+msgid "Rejoignez les Agros, y'a Apér'Agro"
+msgstr ""
+
+#: main.py:134
+msgid "Un verre acheté, une baleine sauvée"
+msgstr ""
+
+#: main.py:135
+msgid "Un verre acheté, un éléphant sauvé"
+msgstr ""
+
+#: main.py:136
+msgid "Un verre acheté, une loutre sauvée"
+msgstr ""
+
+#: main.py:137
+msgid "Un verre acheté, un lama sauvé"
+msgstr ""
+
+#: main.py:138
+msgid "Venez à l'Apér'Agro, les Agros sont aussi chauds que le climat !"
+msgstr ""
+
+#: main.py:139
+msgid "Les Agros ne vous connaissent pas mais vous aiment déjà"
+msgstr ""
+
+#: main.py:140
+msgid "Viens planter des baleines autour d'un verre"
+msgstr ""
+
+#: main.py:141
+msgid "Viens planter des éléphants autour d'un verre"
+msgstr ""
+
+#: main.py:142
+msgid ""
+"Viens soutenir les filières agricoles et viticoles avec les Agros ce soir"
+" !"
+msgstr ""
+
+#: main.py:143
+msgid "Les Agros, ça suffit, vous êtes trop chauds !"
+msgstr ""
+
+#: main.py:150
+msgid "A la tienne ! 😀"
+msgstr ""
+
+#: main.py:151
+msgid "Oh je vois des bières par ici 😁"
+msgstr ""
+
+#: main.py:152
+msgid "Tchin ! 🍻"
+msgstr ""
+
+#: main.py:153
+msgid "Apéro ? 😄"
+msgstr ""
+
+#: main.py:182
+msgid ""
+"Oh, je viens de voir que tu viens de mettre à jour ton pseudo sur le "
+"serveur de Time et que tu as rejoint "
+msgstr ""
+
+#: main.py:185
+msgid ""
+"une nouvelle planète !\n"
+"Voici donc la vidéo de présentation de cette planète ☺"
+msgstr ""
+
+#: main.py:187
+msgid ""
+"de nouvelles planètes !\n"
+"Voici donc les vidéos de présentation de ces planètes ☺"
+msgstr ""
+
+#: main.py:191
+#, python-format
+msgid "Planète %s %s : %s"
+msgstr ""
+
