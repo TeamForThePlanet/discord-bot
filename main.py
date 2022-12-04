@@ -219,6 +219,12 @@ if __name__ == '__main__':
 
             # If no emoji or no channel has been passed, take by default the channel where the command was executed
             if not emojis and not channel:
+                # Check if an emoji was provided to warn user the input is wrong
+                if emoji:
+                    await ctx.reply(
+                        f"Aucun emoji détecté dans \"{emoji}\"..." if fr else f"No emoji detected in \"{emoji}\"..."
+                    )
+                    return
                 channel = ctx.channel
 
             # Add emoji of the selected channel name if it exists at the beginning of the name
