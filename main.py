@@ -9,7 +9,7 @@ from random import choice, randint
 
 import gettext
 
-from discord import ChannelType, File, Intents, DMChannel, Message, Member, Forbidden
+from discord import File, Intents, DMChannel, Message, Member, Forbidden
 from discord.abc import GuildChannel
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand
@@ -27,8 +27,6 @@ def get_translator(lang: str = 'fr_FR'):
 
 
 load_dotenv()
-
-print_information = False
 target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
 target_english_guild_id = int(os.getenv('TARGET_ENGLISH_GUILD_ID', default=0))
 
@@ -47,21 +45,6 @@ class MyBot(Bot):
         print(self.user.name)
         print(self.user.id)
         print('------')
-
-        if print_information:
-            # Display categories and channels of the target Discord server
-            for guild in bot.guilds:
-                if int(guild.id) == target_guild_id:
-                    categories = [c for c in guild.channels if c.type == ChannelType.category]
-                    text_channels = [c for c in guild.channels if c.type == ChannelType.text]
-                    category_to_channel = {}
-                    for category in categories:
-                        print(f'{category.name} :')
-                        category_to_channel[category.name] = []
-                        for c in text_channels:
-                            if c.category_id == category.id:
-                                print(' -', c, repr(c))
-                                category_to_channel[category.name].append(c)
 
     async def on_message(self, message: Message):
         if not message.author.bot:
