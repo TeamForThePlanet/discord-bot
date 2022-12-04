@@ -138,40 +138,40 @@ class MyBot(Bot):
 
         await self.process_commands(message)
 
-    async def on_member_update(self, before: Member, after: Member):
-        if after.nick == before.nick:
-            return
-        print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
-        emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
-        if after.nick:
-            emojis_after = set(distinct_emoji_lis(after.nick))
-            new_emojis = emojis_after.difference(emojis_before)
-            joined_planet = []
-            for emoji in new_emojis:
-                # Replace the loupe emoji if it is in the wrong way
-                if emoji == '🔎':
-                    emoji = '🔍'
-                    try:
-                        await after.edit(nick=after.nick.replace('🔎', '🔍'))
-                    except Forbidden:
-                        print(f'Impossible de modifier le pseudo de {after}')
-                if emoji in planet_videos.keys():
-                    joined_planet.append(emoji)
-
-            if joined_planet:
-                _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
-
-                message = _('Oh, je viens de voir que tu viens de mettre à jour '
-                            'ton pseudo sur le serveur de Time et que tu as rejoint ')
-                if len(joined_planet) == 1:
-                    message += _('une nouvelle planète !\nVoici donc la vidéo de présentation de cette planète ☺')
-                else:
-                    message += _('de nouvelles planètes !\nVoici donc les vidéos de présentation de ces planètes ☺')
-                await after.send(message)
-                for emoji in joined_planet:
-                    await after.send(
-                        _('Planète %s %s : %s' % (emoji, planet_videos[emoji]["label"], planet_videos[emoji]["url"]))
-                    )
+    # async def on_member_update(self, before: Member, after: Member):
+    #     if after.nick == before.nick:
+    #         return
+    #     print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
+    #     emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
+    #     if after.nick:
+    #         emojis_after = set(distinct_emoji_lis(after.nick))
+    #         new_emojis = emojis_after.difference(emojis_before)
+    #         joined_planet = []
+    #         for emoji in new_emojis:
+    #             # Replace the loupe emoji if it is in the wrong way
+    #             if emoji == '🔎':
+    #                 emoji = '🔍'
+    #                 try:
+    #                     await after.edit(nick=after.nick.replace('🔎', '🔍'))
+    #                 except Forbidden:
+    #                     print(f'Impossible de modifier le pseudo de {after}')
+    #             if emoji in planet_videos.keys():
+    #                 joined_planet.append(emoji)
+    #
+    #         if joined_planet:
+    #             _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
+    #
+    #             message = _('Oh, je viens de voir que tu viens de mettre à jour '
+    #                         'ton pseudo sur le serveur de Time et que tu as rejoint ')
+    #             if len(joined_planet) == 1:
+    #                 message += _('une nouvelle planète !\nVoici donc la vidéo de présentation de cette planète ☺')
+    #             else:
+    #                 message += _('de nouvelles planètes !\nVoici donc les vidéos de présentation de ces planètes ☺')
+    #             await after.send(message)
+    #             for emoji in joined_planet:
+    #                 await after.send(
+    #                     _('Planète %s %s : %s' % (emoji, planet_videos[emoji]["label"], planet_videos[emoji]["url"]))
+    #                 )
 
 
 if __name__ == '__main__':
