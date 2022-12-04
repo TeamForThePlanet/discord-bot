@@ -7,7 +7,6 @@ from datetime import datetime
 from functools import lru_cache
 from random import choice, randint
 
-import requests
 import gettext
 
 from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member, Forbidden
@@ -348,74 +347,6 @@ if __name__ == '__main__':
         else:
             await ctx.message.reply('Aucun utilisateur à mentionner...')
         await ctx.message.reply("N'hésite pas à utiliser la commande slash `/alerte-la-planète` la prochaine fois 😉")
-
-
-    @slash.slash(
-        name="cherche-des-liens",
-        description='Permet de rechercher des liens en rapport avec Time',
-        options=[
-            create_option(
-                name='query',
-                description='Préciser les termes de la recherche',
-                option_type=3,
-                required=True
-            )
-        ],
-        guild_ids=[target_guild_id]
-    )
-    async def search_links(ctx, query: str):
-        async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
-            bot.search_links_count += 1
-            found_links = []
-
-            # Prepare request to ShortIO app
-            url = 'https://api.short.io/api/links'
-            querystring = {'domain_id': os.getenv('SHORT_IO_DOMAIN_ID')}
-            headers = {
-                'Accept': 'application/json',
-                'Authorization': os.getenv('SHORT_IO_SECRET_KEY')
-            }
-            response = requests.get(url, headers=headers, params=querystring)
-
-            # Loop through each links and add it to found_links if one of the args is matching
-            for link in response.json()['links']:
-                # Ignore archived links
-                if link['archived']:
-                    continue
-
-                for arg in query.split(' '):
-                    # Stop searching if link has been added
-                    if link in found_links:
-                        break
-
-                    # Check if in one of the fields is matching one of the args
-                    for field in ('title', 'originalURL'):
-                        if arg.lower() in link[field].lower():
-                            found_links.append(link)
-                            break
-
-                    # Check in the tags if link is still not in found_links
-                    if link not in found_links:
-                        for tag in link['tags']:
-                            if arg.lower() in tag.lower():
-                                found_links.append(link)
-                                break
-
-        if found_links:
-            await ctx.reply(f'Voici les résultats de votre recherche "{query}":')
-            for link in found_links:
-                embed = Embed()
-                embed.title = link['title']
-                embed.type = 'link'
-                embed.url = link['shortURL']
-                embed.add_field(name='Lien', value=link["shortURL"], inline=False)
-                if link['icon']:
-                    embed.set_thumbnail(url=link['icon'])
-                if link['tags']:
-                    embed.add_field(name='Tags', value=' | '.join(tag for tag in link['tags']))
-                await ctx.send(embed=embed)
-        else:
-            await ctx.reply(f'Aucun résultat pour votre recherche "{query}"...')
 
 
     async def quarks_to_welcome(ctx):
