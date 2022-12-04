@@ -9,7 +9,7 @@ from random import choice, randint
 
 import gettext
 
-from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member, Forbidden
+from discord import ChannelType, File, Intents, DMChannel, Message, Member, Forbidden
 from discord.abc import GuildChannel
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand
@@ -306,48 +306,6 @@ if __name__ == '__main__':
             ],
             guild_ids=[target_english_guild_id]
         )
-
-
-    @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète', 'notify-the-planet'])
-    async def old_mention_planet_members(ctx, *args):
-        bot.planet_mention_count += 1
-        print(ctx.message.content)
-
-        # Create a list with all emojis to search in usernames
-        emojis = []
-        # Add mentioned channels name in the args list
-        for channel in ctx.message.channel_mentions:
-            args += (channel.name,)
-        # Foreach args, check if it starts with an emoji then add it to the emojis list
-        for arg in args:
-            emoji_list = emoji_lis(arg)
-            if emoji_list and emoji_list[0]['location'] == 0:
-                emojis.append(emoji_list[0]['emoji'])
-
-        print('emojis : ', str(emojis))
-
-        # Search the emoji in the nickname of all guild members
-        members_to_ping = []
-        for member in ctx.guild.members:
-            # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
-            for emoji in emojis:
-                if emoji in member.display_name:
-                    members_to_ping.append(member)
-                    break
-
-        # Ping all targeted members if at least one has been found
-        if members_to_ping:
-            print('Nombre de personnes à pinguer : ', len(members_to_ping))
-            offset = 80
-            for start in range(1 + (len(members_to_ping) - 1) // offset):
-                start = start * offset
-                await ctx.message.reply(
-                    ' '.join(user.mention for user in members_to_ping[start:start + offset])
-                )
-        else:
-            await ctx.message.reply('Aucun utilisateur à mentionner...')
-        await ctx.message.reply("N'hésite pas à utiliser la commande slash `/alerte-la-planète` la prochaine fois 😉")
-
 
     async def quarks_to_welcome(ctx):
         async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
