@@ -9,15 +9,13 @@ from random import choice, randint
 
 import gettext
 
-from discord import File, Intents, DMChannel, Message, Member, Forbidden
+from discord import File, Intents, DMChannel, Message
 from discord.abc import GuildChannel
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand
 from discord_slash.utils.manage_commands import create_option
 from dotenv import load_dotenv
-from emoji import emoji_lis, distinct_emoji_lis
-
-from planet_videos import planet_videos
+from emoji import emoji_lis
 
 
 @lru_cache
@@ -46,75 +44,8 @@ class MyBot(Bot):
         print(self.user.id)
         print('------')
 
-        stats = {}
-        with open('data_all_channels.csv', 'w', encoding='utf-8', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(
-                [
-                    'Salon',
-                    'Date',
-                    'Heure',
-                    'Auteur',
-                    'Pseudo Time',
-                    'Longueur du message',
-                    'Nb de réactions',
-                    'Nb de PJ',
-                    'GIF',
-                    'Liens externes',
-                    'Lien vers le message'
-                ])
-            for channel in self.get_guild(720982721727561768).text_channels:
-                print(channel.name)
-                try:
-                    messages = await channel.history(limit=None).flatten()
-                except Exception:
-                    continue
-
-                for message in messages:
-                    if not message.author.bot:
-                        if message.author.id not in stats:
-                            stats[message.author.id] = {
-                                'user': message.author.name,
-                                'total_messages': 0,
-                                'total_characters': 0,
-                                'total_gif': 0,
-                            }
-                        stats[message.author.id]['total_messages'] += 1
-                        stats[message.author.id]['total_characters'] += len(message.content)
-                        contain_gif = any(a.content_type == 'image/gif' for a in message.attachments) or 'https://tenor.com' in message.content
-                        if contain_gif:
-                            stats[message.author.id]['total_gif'] += 1
-
-                        try:
-                            nickname = message.author.nick.replace('~', '#')
-                        except:
-                            nickname = ''
-
-                        writer.writerow([
-                            channel.name,
-                            message.created_at.strftime('%d/%m/%Y'),
-                            message.created_at.strftime('%H:%M:%S'),
-                            message.author.name.replace('~', '#'),
-                            nickname,
-                            len(message.content),
-                            len(message.reactions),
-                            len(message.attachments),
-                            'Oui' if contain_gif else 'Non',
-                            ' | '.join(re.findall('https?://[^\s]+', message.content)),
-                            message.jump_url
-                        ])
-            if stats:
-                total_messages = sum(s['total_messages'] for s in stats.values())
-                print(f'{total_messages=}')
-                total_characters = sum(s['total_characters'] for s in stats.values())
-                print(f'{total_characters=}')
-                position = 0
-                for stat in sorted(stats.values(), key=lambda s: s['total_messages'], reverse=True)[:100]:
-                    position += 1
-                    print(position)
-                    stat['percentage_messages'] = str(round(stat['total_messages'] * 100 / total_messages, 2))
-                    stat['percentage_characters'] = str(round(stat['total_characters'] * 100 / total_characters, 2))
-                    print(stat)
+        if bool(os.getenv('RUN_MESSAGE_ANALYSIS')):
+            await self.run_message_analysis()
 
     async def on_message(self, message: Message):
         if not message.author.bot:
@@ -208,40 +139,77 @@ class MyBot(Bot):
 
         await self.process_commands(message)
 
-    # async def on_member_update(self, before: Member, after: Member):
-    #     if after.nick == before.nick:
-    #         return
-    #     print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
-    #     emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
-    #     if after.nick:
-    #         emojis_after = set(distinct_emoji_lis(after.nick))
-    #         new_emojis = emojis_after.difference(emojis_before)
-    #         joined_planet = []
-    #         for emoji in new_emojis:
-    #             # Replace the loupe emoji if it is in the wrong way
-    #             if emoji == '🔎':
-    #                 emoji = '🔍'
-    #                 try:
-    #                     await after.edit(nick=after.nick.replace('🔎', '🔍'))
-    #                 except Forbidden:
-    #                     print(f'Impossible de modifier le pseudo de {after}')
-    #             if emoji in planet_videos.keys():
-    #                 joined_planet.append(emoji)
-    #
-    #         if joined_planet:
-    #             _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
-    #
-    #             message = _('Oh, je viens de voir que tu viens de mettre à jour '
-    #                         'ton pseudo sur le serveur de Time et que tu as rejoint ')
-    #             if len(joined_planet) == 1:
-    #                 message += _('une nouvelle planète !\nVoici donc la vidéo de présentation de cette planète ☺')
-    #             else:
-    #                 message += _('de nouvelles planètes !\nVoici donc les vidéos de présentation de ces planètes ☺')
-    #             await after.send(message)
-    #             for emoji in joined_planet:
-    #                 await after.send(
-    #                     _('Planète %s %s : %s' % (emoji, planet_videos[emoji]["label"], planet_videos[emoji]["url"]))
-    #                 )
+    async def run_message_analysis(self, limit=None, before=None, after=None):
+        stats = {}
+        with open('output/data_all_channels.csv', 'w', encoding='utf-8', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(
+                [
+                    'Salon',
+                    'Date',
+                    'Heure',
+                    'Auteur',
+                    'Pseudo Time',
+                    'Longueur du message',
+                    'Nb de réactions',
+                    'Nb de PJ',
+                    'GIF',
+                    'Liens externes',
+                    'Lien vers le message'
+                ])
+            for channel in self.get_guild(720982721727561768).text_channels:
+                print(channel.name)
+                try:
+                    messages = await channel.history(limit=limit, before=before, after=after).flatten()
+                except Exception:
+                    continue
+
+                for message in messages:
+                    if not message.author.bot:
+                        if message.author.id not in stats:
+                            stats[message.author.id] = {
+                                'user': message.author.name,
+                                'total_messages': 0,
+                                'total_characters': 0,
+                                'total_gif': 0,
+                            }
+                        stats[message.author.id]['total_messages'] += 1
+                        stats[message.author.id]['total_characters'] += len(message.content)
+                        contain_gif = any(a.content_type == 'image/gif' for a in
+                                          message.attachments) or 'https://tenor.com' in message.content
+                        if contain_gif:
+                            stats[message.author.id]['total_gif'] += 1
+
+                        try:
+                            nickname = message.author.nick.replace('~', '#')
+                        except:
+                            nickname = ''
+
+                        writer.writerow([
+                            channel.name,
+                            message.created_at.strftime('%d/%m/%Y'),
+                            message.created_at.strftime('%H:%M:%S'),
+                            message.author.name.replace('~', '#'),
+                            nickname,
+                            len(message.content),
+                            len(message.reactions),
+                            len(message.attachments),
+                            'Oui' if contain_gif else 'Non',
+                            ' | '.join(re.findall('https?://[^\s]+', message.content)),
+                            message.jump_url
+                        ])
+            if stats:
+                total_messages = sum(s['total_messages'] for s in stats.values())
+                print(f'{total_messages=}')
+                total_characters = sum(s['total_characters'] for s in stats.values())
+                print(f'{total_characters=}')
+                position = 0
+                for stat in sorted(stats.values(), key=lambda s: s['total_messages'], reverse=True)[:100]:
+                    position += 1
+                    print(position)
+                    stat['percentage_messages'] = str(round(stat['total_messages'] * 100 / total_messages, 2))
+                    stat['percentage_characters'] = str(round(stat['total_characters'] * 100 / total_characters, 2))
+                    print(stat)
 
 
 if __name__ == '__main__':
