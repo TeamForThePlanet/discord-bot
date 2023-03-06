@@ -19,7 +19,7 @@ from emoji import emoji_lis
 
 
 @lru_cache
-def get_translator(lang: str = 'fr_FR'):
+def get_translator(lang: str = 'fr_FR') -> callable:
     trans = gettext.translation('messages', localedir="locale", languages=(lang,))
     return trans.gettext
 
@@ -157,6 +157,7 @@ class MyBot(Bot):
                     'Liens externes',
                     'Lien vers le message'
                 ])
+            print('Start Message Analysis')
             for channel in self.get_guild(720982721727561768).text_channels:
                 print(channel.name)
                 try:
