@@ -7,10 +7,9 @@ from datetime import datetime
 from functools import lru_cache
 from random import choice, randint
 
-import requests
 import gettext
 
-from discord import ChannelType, File, Intents, Embed, DMChannel, Message, Member, Forbidden
+from discord import File, Intents, DMChannel, Message, Member, Forbidden
 from discord.abc import GuildChannel
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand
@@ -28,8 +27,6 @@ def get_translator(lang: str = 'fr_FR'):
 
 
 load_dotenv()
-
-print_information = False
 target_guild_id = int(os.getenv('TARGET_GUILD_ID'))
 target_english_guild_id = int(os.getenv('TARGET_ENGLISH_GUILD_ID', default=0))
 
@@ -118,21 +115,6 @@ class MyBot(Bot):
                     stat['percentage_messages'] = str(round(stat['total_messages'] * 100 / total_messages, 2))
                     stat['percentage_characters'] = str(round(stat['total_characters'] * 100 / total_characters, 2))
                     print(stat)
-
-        if print_information:
-            # Display categories and channels of the target Discord server
-            for guild in bot.guilds:
-                if int(guild.id) == target_guild_id:
-                    categories = [c for c in guild.channels if c.type == ChannelType.category]
-                    text_channels = [c for c in guild.channels if c.type == ChannelType.text]
-                    category_to_channel = {}
-                    for category in categories:
-                        print(f'{category.name} :')
-                        category_to_channel[category.name] = []
-                        for c in text_channels:
-                            if c.category_id == category.id:
-                                print(' -', c, repr(c))
-                                category_to_channel[category.name].append(c)
 
     async def on_message(self, message: Message):
         if not message.author.bot:
@@ -226,40 +208,40 @@ class MyBot(Bot):
 
         await self.process_commands(message)
 
-    async def on_member_update(self, before: Member, after: Member):
-        if after.nick == before.nick:
-            return
-        print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
-        emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
-        if after.nick:
-            emojis_after = set(distinct_emoji_lis(after.nick))
-            new_emojis = emojis_after.difference(emojis_before)
-            joined_planet = []
-            for emoji in new_emojis:
-                # Replace the loupe emoji if it is in the wrong way
-                if emoji == '🔎':
-                    emoji = '🔍'
-                    try:
-                        await after.edit(nick=after.nick.replace('🔎', '🔍'))
-                    except Forbidden:
-                        print(f'Impossible de modifier le pseudo de {after}')
-                if emoji in planet_videos.keys():
-                    joined_planet.append(emoji)
-
-            if joined_planet:
-                _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
-
-                message = _('Oh, je viens de voir que tu viens de mettre à jour '
-                            'ton pseudo sur le serveur de Time et que tu as rejoint ')
-                if len(joined_planet) == 1:
-                    message += _('une nouvelle planète !\nVoici donc la vidéo de présentation de cette planète ☺')
-                else:
-                    message += _('de nouvelles planètes !\nVoici donc les vidéos de présentation de ces planètes ☺')
-                await after.send(message)
-                for emoji in joined_planet:
-                    await after.send(
-                        _('Planète %s %s : %s' % (emoji, planet_videos[emoji]["label"], planet_videos[emoji]["url"]))
-                    )
+    # async def on_member_update(self, before: Member, after: Member):
+    #     if after.nick == before.nick:
+    #         return
+    #     print(f'{after} a changé son pseudo : {before.nick} --> {after.nick}')
+    #     emojis_before = set(distinct_emoji_lis(before.nick)) if before.nick else set()
+    #     if after.nick:
+    #         emojis_after = set(distinct_emoji_lis(after.nick))
+    #         new_emojis = emojis_after.difference(emojis_before)
+    #         joined_planet = []
+    #         for emoji in new_emojis:
+    #             # Replace the loupe emoji if it is in the wrong way
+    #             if emoji == '🔎':
+    #                 emoji = '🔍'
+    #                 try:
+    #                     await after.edit(nick=after.nick.replace('🔎', '🔍'))
+    #                 except Forbidden:
+    #                     print(f'Impossible de modifier le pseudo de {after}')
+    #             if emoji in planet_videos.keys():
+    #                 joined_planet.append(emoji)
+    #
+    #         if joined_planet:
+    #             _ = get_translator('en' if after.guild.id == target_english_guild_id else 'fr_FR')
+    #
+    #             message = _('Oh, je viens de voir que tu viens de mettre à jour '
+    #                         'ton pseudo sur le serveur de Time et que tu as rejoint ')
+    #             if len(joined_planet) == 1:
+    #                 message += _('une nouvelle planète !\nVoici donc la vidéo de présentation de cette planète ☺')
+    #             else:
+    #                 message += _('de nouvelles planètes !\nVoici donc les vidéos de présentation de ces planètes ☺')
+    #             await after.send(message)
+    #             for emoji in joined_planet:
+    #                 await after.send(
+    #                     _('Planète %s %s : %s' % (emoji, planet_videos[emoji]["label"], planet_videos[emoji]["url"]))
+    #                 )
 
 
 if __name__ == '__main__':
@@ -289,6 +271,12 @@ if __name__ == '__main__':
 
             # If no emoji or no channel has been passed, take by default the channel where the command was executed
             if not emojis and not channel:
+                # Check if an emoji was provided to warn user the input is wrong
+                if emoji:
+                    await ctx.reply(
+                        f"Aucun emoji détecté dans \"{emoji}\"..." if fr else f"No emoji detected in \"{emoji}\"..."
+                    )
+                    return
                 channel = ctx.channel
 
             # Add emoji of the selected channel name if it exists at the beginning of the name
@@ -371,116 +359,6 @@ if __name__ == '__main__':
             ],
             guild_ids=[target_english_guild_id]
         )
-
-
-    @bot.command(name='alerte-la-planete', aliases=['alerte-la-planète', 'notify-the-planet'])
-    async def old_mention_planet_members(ctx, *args):
-        bot.planet_mention_count += 1
-        print(ctx.message.content)
-
-        # Create a list with all emojis to search in usernames
-        emojis = []
-        # Add mentioned channels name in the args list
-        for channel in ctx.message.channel_mentions:
-            args += (channel.name,)
-        # Foreach args, check if it starts with an emoji then add it to the emojis list
-        for arg in args:
-            emoji_list = emoji_lis(arg)
-            if emoji_list and emoji_list[0]['location'] == 0:
-                emojis.append(emoji_list[0]['emoji'])
-
-        print('emojis : ', str(emojis))
-
-        # Search the emoji in the nickname of all guild members
-        members_to_ping = []
-        for member in ctx.guild.members:
-            # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
-            for emoji in emojis:
-                if emoji in member.display_name:
-                    members_to_ping.append(member)
-                    break
-
-        # Ping all targeted members if at least one has been found
-        if members_to_ping:
-            print('Nombre de personnes à pinguer : ', len(members_to_ping))
-            offset = 80
-            for start in range(1 + (len(members_to_ping) - 1) // offset):
-                start = start * offset
-                await ctx.message.reply(
-                    ' '.join(user.mention for user in members_to_ping[start:start + offset])
-                )
-        else:
-            await ctx.message.reply('Aucun utilisateur à mentionner...')
-        await ctx.message.reply("N'hésite pas à utiliser la commande slash `/alerte-la-planète` la prochaine fois 😉")
-
-
-    @slash.slash(
-        name="cherche-des-liens",
-        description='Permet de rechercher des liens en rapport avec Time',
-        options=[
-            create_option(
-                name='query',
-                description='Préciser les termes de la recherche',
-                option_type=3,
-                required=True
-            )
-        ],
-        guild_ids=[target_guild_id]
-    )
-    async def search_links(ctx, query: str):
-        async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
-            bot.search_links_count += 1
-            found_links = []
-
-            # Prepare request to ShortIO app
-            url = 'https://api.short.io/api/links'
-            querystring = {'domain_id': os.getenv('SHORT_IO_DOMAIN_ID')}
-            headers = {
-                'Accept': 'application/json',
-                'Authorization': os.getenv('SHORT_IO_SECRET_KEY')
-            }
-            response = requests.get(url, headers=headers, params=querystring)
-
-            # Loop through each links and add it to found_links if one of the args is matching
-            for link in response.json()['links']:
-                # Ignore archived links
-                if link['archived']:
-                    continue
-
-                for arg in query.split(' '):
-                    # Stop searching if link has been added
-                    if link in found_links:
-                        break
-
-                    # Check if in one of the fields is matching one of the args
-                    for field in ('title', 'originalURL'):
-                        if arg.lower() in link[field].lower():
-                            found_links.append(link)
-                            break
-
-                    # Check in the tags if link is still not in found_links
-                    if link not in found_links:
-                        for tag in link['tags']:
-                            if arg.lower() in tag.lower():
-                                found_links.append(link)
-                                break
-
-        if found_links:
-            await ctx.reply(f'Voici les résultats de votre recherche "{query}":')
-            for link in found_links:
-                embed = Embed()
-                embed.title = link['title']
-                embed.type = 'link'
-                embed.url = link['shortURL']
-                embed.add_field(name='Lien', value=link["shortURL"], inline=False)
-                if link['icon']:
-                    embed.set_thumbnail(url=link['icon'])
-                if link['tags']:
-                    embed.add_field(name='Tags', value=' | '.join(tag for tag in link['tags']))
-                await ctx.send(embed=embed)
-        else:
-            await ctx.reply(f'Aucun résultat pour votre recherche "{query}"...')
-
 
     async def quarks_to_welcome(ctx):
         async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
