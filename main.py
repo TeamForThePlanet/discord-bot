@@ -274,12 +274,15 @@ if __name__ == '__main__':
         # Ping all targeted members if at least one has been found
         if members_to_ping:
             print('Nombre de personnes à pinguer : ', len(members_to_ping))
-            offset = 80
-            for start in range(1 + (len(members_to_ping) - 1) // offset):
-                start = start * offset
-                await ctx.reply(
-                    ' '.join(user.mention for user in members_to_ping[start:start + offset])
-                )
+
+            # Create temporary role
+            role = await ctx.guild.create_role(name=channel.name if channel else emoji)
+            for member in members_to_ping:
+                await member.add_roles(role)
+
+            await ctx.reply(f'Alerte la planète : {channel.mention if channel else emoji} [{role.mention} automatiquement supprimé]')
+
+            await role.delete()
         else:
             await ctx.reply(
                 'Aucun utilisateur à mentionner...' if fr else 'No user to mention...'
