@@ -149,7 +149,7 @@ class MyBot(Bot):
                     'Date',
                     'Heure',
                     'Auteur',
-                    'Pseudo Time',
+                    'Pseudo TFTP',
                     'Longueur du message',
                     'Nb de réactions',
                     'Nb de PJ',
@@ -336,9 +336,9 @@ if __name__ == '__main__':
             written = False
             with open(filename, 'w', encoding='utf-8', newline='') as file:
                 writer = csv.writer(file)
-                headers = ['Nom utilisateur Discord', 'Pseudo serveur Time', 'Date arrivée sur le serveur']
+                headers = ['Nom utilisateur Discord', 'Pseudo serveur TFTP', 'Date arrivée sur le serveur']
                 if not fr:
-                    headers = ['Discord username', 'Time server nickname', 'Joining date']
+                    headers = ['Discord username', 'TFTP server nickname', 'Joining date']
                 writer.writerow(headers)
                 for member in ctx.guild.members:
                     if not member.bot and '*' not in member.display_name:

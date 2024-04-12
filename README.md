@@ -1,5 +1,5 @@
 # discord-bot
-A bot to integrate into the Time for the Planet Discord
+Old bot that we integrated into the Team for the Planet Discord server.
 
 ## How to run the Bot ?
 
@@ -10,7 +10,7 @@ You must have a Discord account in order to create the application and the bot.
 - Since the bot tracks has to download the entire member list, check the option `Server Members Intent` in the **Privileged Gateway Intents** section
 - Get Server ID: Server Settings > Widget > Copy "Server ID"
 - Add the bot into the wanted Discord Server (also grab the ID of the server, you must activate Developer mode in order to see it)
-- `git clone https://github.com/TimeForThePlanet/discord-bot.git`
+- `git clone https://github.com/TeamForThePlanet/discord-bot.git`
 - `pip install -r requirements.txt`
 - Create an `.env` file with the following information :
 
@@ -34,7 +34,7 @@ CREATOR_ID={Your Discord User ID}
 
 ### `!alerte-la-planete`
 
-This command is useful to notify every member from a planet in the Time Discord server. It searches every user that have the planet emoji in their Discord nickname.
+This command is useful to notify every member from a planet in the TFTP Discord server. It searches every user that have the planet emoji in their Discord nickname.
 
 For example :
 
@@ -67,7 +67,7 @@ Then you can update translations for a locale like this:
 
     pybabel update -d locale -l fr_FR -i locale/base.pot
 
-If the locale doesn't exist in the locale directory, you'll want to init that locale with this command:
+If the locale doesn't exist in the locale directory, you'll want to init that locale with this command (replace `it` with desired country code):
 
     pybabel init -d locale -l it -i locale/base.pot
 
