@@ -235,61 +235,17 @@ if __name__ == '__main__':
         print(f'{emoji=}')
 
         async with ctx.channel.typing() if ctx.channel else AsyncExitStack():
-            # Create a list with all emojis found in the emoji parameter
-            emojis = [e['emoji'] for e in emoji_lis(emoji)] if emoji else []
-
-            # If no emoji or no channel has been passed, take by default the channel where the command was executed
-            if not emojis and not channel:
-                # Check if an emoji was provided to warn user the input is wrong
-                if emoji:
-                    await ctx.reply(
-                        f"Aucun emoji détecté dans \"{emoji}\"..." if fr else f"No emoji detected in \"{emoji}\"..."
-                    )
-                    return
-                channel = ctx.channel
-
-            # Add emoji of the selected channel name if it exists at the beginning of the name
-            if channel:
-                emoji_list = emoji_lis(str(channel))
-                if emoji_list and emoji_list[0]['location'] == 0:
-                    emojis.append(emoji_list[0]['emoji'])
-                else:
-                    await ctx.reply(
-                        f"{channel.mention} n'est pas un salon de planète ou bien n'a pas d'emoji associé." if fr
-                        else f"{channel.mention} is not a planet channel or it doesn't have an associated emoji."
-                    )
-                    return
-
-            print('emojis : ', str(emojis))
-
-            # Search the emoji in the nickname of all guild members
-            members_to_ping = []
-            for member in ctx.guild.members:
-                # Use nickname to search the emoji inside (fallback to the name if nickname hasn't been set)
-                for emoji in emojis:
-                    if emoji in member.display_name:
-                        members_to_ping.append(member)
-                        break
-
-        # Ping all targeted members if at least one has been found
-        if members_to_ping:
-            print('Nombre de personnes à pinguer : ', len(members_to_ping))
-            offset = 80
-            for start in range(1 + (len(members_to_ping) - 1) // offset):
-                start = start * offset
-                await ctx.reply(
-                    ' '.join(user.mention for user in members_to_ping[start:start + offset])
-                )
-        else:
             await ctx.reply(
-                'Aucun utilisateur à mentionner...' if fr else 'No user to mention...'
+                "Ah non désolé j'ai pris ma retraite 😄 Tu peux problament utiliser un rôle pour mentionner ceux que tu souhaites (ex : `@Gluon`)"
+                if fr
+                else 'Sorry I retired 😄 Please use roles instead of that command now.'
             )
 
 
     slash.add_slash_command(
         mention_planet_members,
         name='alerte-la-planète',
-        description="Créé une alerte pour toutes les membres d'une planète. "
+        description="[Déprécié] Créé une alerte pour toutes les membres d'une planète. "
                     "Veuiller saisir un emoji ou choisir un salon.",
         options=[
             create_option(
@@ -311,7 +267,7 @@ if __name__ == '__main__':
         slash.add_slash_command(
             mention_planet_members,
             name='notify-the-planet',
-            description="Create an alert to every planet members. Please type an emojo or select a channel.",
+            description="[Deprecated] Create an alert to every planet members. Please type an emojo or select a channel.",
             options=[
                 create_option(
                     name='emoji',
