@@ -245,8 +245,7 @@ if __name__ == '__main__':
     slash.add_slash_command(
         mention_planet_members,
         name='alerte-la-planète',
-        description="[Déprécié] Créé une alerte pour toutes les membres d'une planète. "
-                    "Veuiller saisir un emoji ou choisir un salon.",
+        description="[Déprécié] Créé une alerte pour toutes les membres d'une planète.",
         options=[
             create_option(
                 name='emoji',
@@ -267,7 +266,7 @@ if __name__ == '__main__':
         slash.add_slash_command(
             mention_planet_members,
             name='notify-the-planet',
-            description="[Deprecated] Create an alert to every planet members. Please type an emojo or select a channel.",
+            description="[Deprecated] Create an alert to every planet members.",
             options=[
                 create_option(
                     name='emoji',
