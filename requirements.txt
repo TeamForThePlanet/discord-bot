@@ -4,4 +4,4 @@ discord-py-slash-command==3.0.3
 discord.py==1.7.3
 emoji==1.6.1
 python-dotenv==1.0.0
-setuptools==67.5.1
+setuptools==70.0.0
